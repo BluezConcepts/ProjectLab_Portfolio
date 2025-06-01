@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3×3 Grid with Hover-Triggered Mesh Gradients</title>
+  <title>3×3 Grid with Animated Mesh Gradients</title>
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
        RESET & BOX-SIZING
@@ -17,13 +17,13 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #23262d;
+      background-color: #0d0e1a;
       font-family: sans-serif;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
        DEFAULT GRID VARIABLES ON :root
-       3 columns × 3 rows, all start as 1fr
+       Three columns and three rows, each defaulting to 1fr
     ────────────────────────────────────────────────────────────────────────── */
     :root {
       --c1: 1fr;
@@ -35,110 +35,174 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       GRID: fills viewport (3×3)
-       Uses CSS vars so JS and :has() can override fractions
+       GRID: fills viewport (3 columns × 3 rows)
+       Uses CSS vars for fractions so JS and :has() can override.
     ────────────────────────────────────────────────────────────────────────── */
     .grid {
       display: grid;
       width: 100vw;
       height: 100vh;
       gap: 6px;
-      grid-template-columns: var(--c1) var(--c2) var(--c3);
-      grid-template-rows:    var(--r1) var(--r2) var(--r3);
-      transition: grid-template-columns 1s ease,
-                  grid-template-rows    1s ease;
+
+      grid-template-columns:
+        var(--c1) var(--c2) var(--c3);
+      grid-template-rows:
+        var(--r1) var(--r2) var(--r3);
+
+      /* smooth transition when vars change */
+      transition:
+        grid-template-columns 1s ease,
+        grid-template-rows    1s ease;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
        HOVER-RESIZE VIA :has()
-       When a cell is hovered, its row & column become 2fr; others stay 1fr
+       Each rule sets the hovered cell’s row & column to 2fr; others to 1fr.
     ────────────────────────────────────────────────────────────────────────── */
-    .grid:has(.item:nth-child(1):hover) { --c1:2fr; --c2:1fr; --c3:1fr; --r1:2fr; --r2:1fr; --r3:1fr; }
-    .grid:has(.item:nth-child(2):hover) { --c1:1fr; --c2:2fr; --c3:1fr; --r1:2fr; --r2:1fr; --r3:1fr; }
-    .grid:has(.item:nth-child(3):hover) { --c1:1fr; --c2:1fr; --c3:2fr; --r1:2fr; --r2:1fr; --r3:1fr; }
+    /* Row 1, Col 1 → index 1 */
+    .grid:has(.item:nth-child(1):hover) {
+      --c1: 2fr; --c2: 1fr; --c3: 1fr;
+      --r1: 2fr; --r2: 1fr; --r3: 1fr;
+    }
+    /* Row 1, Col 2 → index 2 */
+    .grid:has(.item:nth-child(2):hover) {
+      --c1: 1fr; --c2: 2fr; --c3: 1fr;
+      --r1: 2fr; --r2: 1fr; --r3: 1fr;
+    }
+    /* Row 1, Col 3 → index 3 */
+    .grid:has(.item:nth-child(3):hover) {
+      --c1: 1fr; --c2: 1fr; --c3: 2fr;
+      --r1: 2fr; --r2: 1fr; --r3: 1fr;
+    }
 
-    .grid:has(.item:nth-child(4):hover) { --c1:2fr; --c2:1fr; --c3:1fr; --r1:1fr; --r2:2fr; --r3:1fr; }
-    .grid:has(.item:nth-child(5):hover) { --c1:1fr; --c2:2fr; --c3:1fr; --r1:1fr; --r2:2fr; --r3:1fr; }
-    .grid:has(.item:nth-child(6):hover) { --c1:1fr; --c2:1fr; --c3:2fr; --r1:1fr; --r2:2fr; --r3:1fr; }
+    /* Row 2, Col 1 → index 4 */
+    .grid:has(.item:nth-child(4):hover) {
+      --c1: 2fr; --c2: 1fr; --c3: 1fr;
+      --r1: 1fr; --r2: 2fr; --r3: 1fr;
+    }
+    /* Row 2, Col 2 → index 5 */
+    .grid:has(.item:nth-child(5):hover) {
+      --c1: 1fr; --c2: 2fr; --c3: 1fr;
+      --r1: 1fr; --r2: 2fr; --r3: 1fr;
+    }
+    /* Row 2, Col 3 → index 6 */
+    .grid:has(.item:nth-child(6):hover) {
+      --c1: 1fr; --c2: 1fr; --c3: 2fr;
+      --r1: 1fr; --r2: 2fr; --r3: 1fr;
+    }
 
-    .grid:has(.item:nth-child(7):hover) { --c1:2fr; --c2:1fr; --c3:1fr; --r1:1fr; --r2:1fr; --r3:2fr; }
-    .grid:has(.item:nth-child(8):hover) { --c1:1fr; --c2:2fr; --c3:1fr; --r1:1fr; --r2:1fr; --r3:2fr; }
-    .grid:has(.item:nth-child(9):hover) { --c1:1fr; --c2:1fr; --c3:2fr; --r1:1fr; --r2:1fr; --r3:2fr; }
+    /* Row 3, Col 1 → index 7 */
+    .grid:has(.item:nth-child(7):hover) {
+      --c1: 2fr; --c2: 1fr; --c3: 1fr;
+      --r1: 1fr; --r2: 1fr; --r3: 2fr;
+    }
+    /* Row 3, Col 2 → index 8 */
+    .grid:has(.item:nth-child(8):hover) {
+      --c1: 1fr; --c2: 2fr; --c3: 1fr;
+      --r1: 1fr; --r2: 1fr; --r3: 2fr;
+    }
+    /* Row 3, Col 3 → index 9 */
+    .grid:has(.item:nth-child(9):hover) {
+      --c1: 1fr; --c2: 1fr; --c3: 2fr;
+      --r1: 1fr; --r2: 1fr; --r3: 2fr;
+    }
 
     /* ──────────────────────────────────────────────────────────────────────────
        MESH GRADIENT STYLES
-       Each .item contains a .gradient-wrap with a .meshgradient inside
-       Only animate on hover via separate rules below
+       Each .item contains a .gradient-wrap with a .meshgradient inside it.
+       .color layers animate radially.
     ────────────────────────────────────────────────────────────────────────── */
     .gradient-wrap {
       position: absolute;
-      inset: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
     }
     .meshgradient > .color {
       position: absolute;
       width: 100%;
       height: 100%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(3) rotate(0deg);
+      top: 0; left: 0; right: 0; bottom: 0;
+      margin: auto;
+      transform: scale(3) rotate(0deg);
       background-repeat: no-repeat;
       mix-blend-mode: overlay;
-      /* no animation by default */
     }
-
-    /* Hover-triggered animations */
-    .item:hover .c1 {
-      animation: c1 8s linear infinite;
+    .c1 {
+      background: radial-gradient(#ec8123 25%, transparent 50%);
+      background-size: 60% 80%;
+      background-position: 0 0;
+      animation: c1 8s infinite linear;
     }
-    .item:hover .c2 {
-      animation: c2 10s linear infinite reverse;
+    .c2 {
+      background: radial-gradient(#300dfa 25%, transparent 50%);
+      background-size: 70% 80%;
+      background-position: 0 100%;
+      animation: c2 10s infinite linear;
     }
-    .item:hover .c3 {
-      animation: c3 5s linear infinite;
+    .c3 {
+      background: radial-gradient(#5179ce 25%, transparent 50%);
+      background-size: 80% 80%;
+      background-position: 50% 0;
+      animation: c3 5s infinite linear;
     }
-    .item:hover .c4 {
-      animation: c4 6s linear infinite;
+    .c4 {
+      background: radial-gradient(#efbdc8 25%, transparent 50%);
+      background-size: 80% 80%;
+      background-position: 50% 100%;
+      animation: c4 6s infinite linear;
     }
 
     @keyframes c1 {
-      0% { transform: translate(-50%, -50%) scale(3) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) scale(3) rotate(360deg); }
+      50% {
+        background-size: 80% 80%;
+        background-position: 50% 100%;
+        transform: scale(3) rotate(-75deg);
+      }
     }
     @keyframes c2 {
-      0% { transform: translate(-50%, -50%) scale(3) rotate(360deg); }
-      100% { transform: translate(-50%, -50%) scale(3) rotate(0deg); }
+      50% {
+        background-size: 80% 80%;
+        background-position: 50% 0;
+        transform: scale(3) rotate(90deg);
+      }
     }
     @keyframes c3 {
-      0% { transform: translate(-50%, -50%) scale(3) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) scale(3) rotate(360deg); }
+      50% {
+        background-size: 70% 80%;
+        background-position: 0 100%;
+        transform: scale(3) rotate(8deg);
+      }
     }
     @keyframes c4 {
-      0% { transform: translate(-50%, -50%) scale(3) rotate(360deg); }
-      100% { transform: translate(-50%, -50%) scale(3) rotate(0deg); }
+      50% {
+        background-position: 0 0;
+        transform: scale(3) rotate(-36deg);
+      }
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       EACH CELL (.item): contains centered text, no color change on hover
+       EACH CELL (.item): contains text and mesh gradient, subtle hover.
     ────────────────────────────────────────────────────────────────────────── */
     .item {
       position: relative;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-size: clamp(1rem, 2.5vw, 2.5rem);
-      text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
       cursor: pointer;
-      /* remove opacity change */
+      transition: opacity 200ms ease;
+      overflow: hidden;
+    }
+    .item:hover {
+      opacity: 0.9;
     }
     .item .text {
       position: relative;
       z-index: 1;
-      background: rgba(0,0,0,0.3);
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
     }
   </style>
 </head>
@@ -150,7 +214,7 @@
           <div class="color c1"></div>
           <div class="color c2"></div>
           <div class="color c3"></div>
-          <div class="color c4"></div>
+          <!-- <div class="color c4"></div> -->
         </div>
       </div>
       <div class="text">ABOUT</div>
@@ -180,7 +244,7 @@
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
-          <div class="color c1"></div>
+          <!-- <div class="color c1"></div> -->
           <div class="color c2"></div>
           <div class="color c3"></div>
           <div class="color c4"></div>
@@ -193,7 +257,7 @@
         <div class="meshgradient">
           <div class="color c1"></div>
           <div class="color c2"></div>
-          <div class="color c3"></div>
+          <!-- <div class="color c3"></div> -->
           <div class="color c4"></div>
         </div>
       </div>
@@ -202,9 +266,9 @@
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
-          <div class="color c1"></div>
+          <!-- <div class="color c1"></div>
           <div class="color c2"></div>
-          <div class="color c3"></div>
+          <div class="color c3"></div> -->
           <div class="color c4"></div>
         </div>
       </div>
@@ -214,8 +278,8 @@
       <div class="gradient-wrap">
         <div class="meshgradient">
           <div class="color c1"></div>
-          <div class="color c2"></div>
-          <div class="color c3"></div>
+          <!-- <div class="color c2"></div>
+          <div class="color c3"></div> -->
           <div class="color c4"></div>
         </div>
       </div>
@@ -226,8 +290,8 @@
         <div class="meshgradient">
           <div class="color c1"></div>
           <div class="color c2"></div>
-          <div class="color c3"></div>
-          <div class="color c4"></div>
+          <!-- <div class="color c3"></div>
+          <div class="color c4"></div> -->
         </div>
       </div>
       <div class="text">Labo Geel</div>
@@ -237,7 +301,7 @@
         <div class="meshgradient">
           <div class="color c1"></div>
           <div class="color c2"></div>
-          <div class="color c3"></div>
+          <!-- <div class="color c3"></div> -->
           <div class="color c4"></div>
         </div>
       </div>
@@ -250,14 +314,17 @@
       const colCount = 3;
       const rowCount = 3;
 
-      // Randomize grid-template vars every 3 seconds
+      // Randomize grid-template vars on :root every 3 seconds
       function randomizeGridVars() {
+        // columns: generate 3 random fr values
         const cols = Array.from({ length: colCount })
           .map(() => `${Math.floor(Math.random() * 5 + 1)}fr`)
           .join(' ');
+        // rows: generate 3 random fr values
         const rows = Array.from({ length: rowCount })
           .map(() => `${Math.floor(Math.random() * 5 + 1)}fr`)
           .join(' ');
+        // apply to :root
         const root = document.documentElement;
         const [c1, c2, c3] = cols.split(' ');
         const [r1, r2, r3] = rows.split(' ');
@@ -269,18 +336,10 @@
         root.style.setProperty('--r3', r3);
       }
 
-      // Assign random colors to each .color layer per .item
-      document.querySelectorAll('.item').forEach(item => {
-        const layers = item.querySelectorAll('.color');
-        layers.forEach(layer => {
-          const hue = Math.floor(Math.random() * 360);
-          const nextHue = (hue + 60) % 360;
-          layer.style.background = `radial-gradient(circle at center, hsl(${hue}, 70%, 50%) 25%, transparent 50%)`;
-        });
-      });
-
+      // Initial randomization
       randomizeGridVars();
-      setInterval(randomizeGridVars, 3000);
+      // Repeat every 3 seconds
+      setInterval(randomizeGridVars, 2500);
     });
   </script>
 </body>
