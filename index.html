@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3×3 Grid: Centered Titles + Click‐to‐Expand</title>
+  <title>3×3 Grid: Smooth Hover + Click‐to‐Expand Animation</title>
   <!-- Google Font: Tektur -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;700&display=swap" rel="stylesheet" />
@@ -39,7 +39,8 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       GRID: Full viewport, 3×3
+       GRID: full viewport, 3×3  
+       Now transitions over 500ms ease for hover resizing
     ────────────────────────────────────────────────────────────────────────── */
     .grid {
       display: grid;
@@ -49,25 +50,69 @@
       grid-template-columns: var(--c1) var(--c2) var(--c3);
       grid-template-rows:    var(--r1) var(--r2) var(--r3);
       transition:
-        grid-template-columns 1s ease,
-        grid-template-rows    1s ease;
+        grid-template-columns 800ms ease,
+        grid-template-rows    800ms ease;
+      position: relative;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       EACH CELL (.item):   
-       – flex centering at all times  
+       HOVER-RESIZE VIA :has()
+       Each hovered .item temporarily sets its row & column to 2fr
+    ────────────────────────────────────────────────────────────────────────── */
+    .grid:has(.item:nth-child(1):hover) {
+      --c1: 2fr; --c2: 1fr; --c3: 1fr;
+      --r1: 2fr; --r2: 1fr; --r3: 1fr;
+    }
+    .grid:has(.item:nth-child(2):hover) {
+      --c1: 1fr; --c2: 2fr; --c3: 1fr;
+      --r1: 2fr; --r2: 1fr; --r3: 1fr;
+    }
+    .grid:has(.item:nth-child(3):hover) {
+      --c1: 1fr; --c2: 1fr; --c3: 2fr;
+      --r1: 2fr; --r2: 1fr; --r3: 1fr;
+    }
+    .grid:has(.item:nth-child(4):hover) {
+      --c1: 2fr; --c2: 1fr; --c3: 1fr;
+      --r1: 1fr; --r2: 2fr; --r3: 1fr;
+    }
+    .grid:has(.item:nth-child(5):hover) {
+      --c1: 1fr; --c2: 2fr; --c3: 1fr;
+      --r1: 1fr; --r2: 2fr; --r3: 1fr;
+    }
+    .grid:has(.item:nth-child(6):hover) {
+      --c1: 1fr; --c2: 1fr; --c3: 2fr;
+      --r1: 1fr; --r2: 2fr; --r3: 1fr;
+    }
+    .grid:has(.item:nth-child(7):hover) {
+      --c1: 2fr; --c2: 1fr; --c3: 1fr;
+      --r1: 1fr; --r2: 1fr; --r3: 2fr;
+    }
+    .grid:has(.item:nth-child(8):hover) {
+      --c1: 1fr; --c2: 2fr; --c3: 1fr;
+      --r1: 1fr; --r2: 1fr; --r3: 2fr;
+    }
+    .grid:has(.item:nth-child(9):hover) {
+      --c1: 1fr; --c2: 1fr; --c3: 2fr;
+      --r1: 1fr; --r2: 1fr; --r3: 2fr;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       EACH CELL (.item):
+       – base is position: relative in grid  
+       – flex centering for title/body  
        – mesh-gradient background behind  
+       – smooth opacity on hover  
     ────────────────────────────────────────────────────────────────────────── */
     .item {
-      position: relative;
+      position: relative;                   /* in‐grid baseline */
       display: flex;
-      flex-direction: column;        /* allow title + body in expanded state */
-      align-items: center;           /* always center horizontally */
-      justify-content: center;       /* center vertically unless expanded pushes it */
+      flex-direction: column;               /* so body can stack under title */
+      align-items: center;                  /* horizontal centering */
+      justify-content: center;              /* vertical centering if not expanded */
       cursor: pointer;
       overflow: hidden;
       color: #fff;
-      transition: opacity 200ms ease;
+      transition: opacity 300ms ease;
     }
     .item:hover {
       opacity: 0.9;
@@ -143,57 +188,73 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       TITLE TEXT:
-       – Always horizontally centered via flexbox  
-       – Prevent wrapping (single line)  
-       – Responsive vw sizing  
+       TITLE (.title):
+       – Always centered (flex in .item does that)  
+       – Prevent wrapping so “Databronnen” etc. never split mid-word  
+       – Responsive font-size; 500ms ease transitions  
     ────────────────────────────────────────────────────────────────────────── */
     .item .title {
       font-size: 1.5vw;
       text-align: center;
-      white-space: nowrap;       /* never break mid-word */
-      overflow-wrap: normal;     /* prevent forced breaks */
+      white-space: nowrap;       /* single line, no forced breaks */
+      overflow-wrap: normal;
       z-index: 1;
       color: #fff;
       text-shadow: 0 0 6px rgba(0,0,0,0.8);
-      transition: font-size 1s ease, margin-top 0.5s ease;
+      transition:
+        font-size 500ms ease,
+        margin-top 500ms ease;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
        CLICK-TO-EXPAND:  
-       When “.expanded” is added, that .item becomes full-screen.  
+       We use two helper classes on the clicked tile:  
+         • .animating – holds initial absolute position + transitions  
+         • .expanded  – the final full‐screen state (top:0, left:0, w/h:100vw×100vh)  
     ────────────────────────────────────────────────────────────────────────── */
-    .item.expanded {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+    .item.animating {
+      position: absolute;       /* take it out of the grid flow */
       z-index: 10;
-      background-color: rgba(0,0,0,0.7);
-      transition: width 0.5s ease, height 0.5s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;      /* keep title horizontally centered */
-      justify-content: flex-start;  /* push content toward top */
+      /* we’ll set inline top/left/width/height via JS */
+      transition:
+        top 500ms ease,
+        left 500ms ease,
+        width 500ms ease,
+        height 500ms ease;
     }
+    .item.expanded {
+      top: 0 !important;        /* move to viewport top */
+      left: 0 !important;       /* move to viewport left */
+      width: 100vw !important;  /* expand full width */
+      height: 100vh !important; /* expand full height */
+      background-color: rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;    /* so title + body stack */
+      align-items: center;       /* keep title centered horizontally */
+      justify-content: flex-start; /* push content toward top */
+    }
+    /* Once expanded, bump the title downward */
     .item.expanded .title {
       margin-top: 2rem;
       font-size: 2.5vw;
     }
 
-    /* Hide all other tiles when one is expanded */
+    /* Hide siblings immediately when one is expanded */
     .grid:has(.item.expanded) .item:not(.expanded) {
       opacity: 0;
       pointer-events: none;
     }
 
-    /* BODY TEXT: hidden until expanded */
+    /* ──────────────────────────────────────────────────────────────────────────
+       BODY TEXT (.body):
+       – hidden until expanded  
+       – then fades/unwraps over 500ms
+    ────────────────────────────────────────────────────────────────────────── */
     .body {
       opacity: 0;
       max-height: 0;
       overflow: hidden;
-      transition: opacity 0.5s ease, max-height 0.5s ease;
+      transition: opacity 500ms ease, max-height 500ms ease;
       width: 80%;
       margin: 1rem auto;
       color: #fff;
@@ -202,7 +263,7 @@
     .item.expanded .body {
       opacity: 1;
       max-height: 500px;
-      transition-delay: 0.5s;
+      transition-delay: 0.5s;  /* wait for tile to finish expanding */
     }
     .body p {
       opacity: 0;
@@ -219,7 +280,10 @@
       }
     }
 
-    /* CLOSE BUTTON: hidden until expanded */
+    /* ──────────────────────────────────────────────────────────────────────────
+       CLOSE BUTTON (.close-btn):
+       – hidden until expanded, then appears
+    ────────────────────────────────────────────────────────────────────────── */
     .close-btn {
       display: none;
       position: absolute;
@@ -238,9 +302,10 @@
     }
   </style>
 </head>
+
 <body>
   <div class="grid" id="grid">
-    <!-- Nine items: each has .title, hidden .body, and .close-btn hidden by default -->
+    <!-- 9 items: each has .title, a hidden .body, and a hidden close button -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -252,7 +317,7 @@
       <div class="title">ABOUT</div>
       <div class="body">
         <p>About the project:</p>
-        <p>This container expands full-screen on click.</p>
+        <p>This container expands full‐screen on click.</p>
         <p>The body content appears line by line.</p>
         <p>Click the close button to collapse.</p>
       </div>
@@ -415,7 +480,7 @@
       randomizeGrid();
       setInterval(randomizeGrid, 2500);
 
-      // 2) Mesh-gradient randomness (delay/offset/scale/rotation)
+      // 2) Randomize mesh-gradient layers (delay, offset, scale, rotation)
       document.querySelectorAll('.meshgradient > .color').forEach(layer => {
         let base = 8;
         if (layer.classList.contains('c2')) base = 10;
@@ -429,24 +494,92 @@
         layer.style.transform = `translate(${offX}, ${offY}) scale(${scl}) rotate(${rot}deg)`;
       });
 
-      // 3) Click-to-expand / Close logic
+      // 3) Click-to-expand / Close logic with smooth transition
       items.forEach(item => {
         const closeBtn = item.querySelector('.close-btn');
 
         item.addEventListener('click', e => {
+          // If user clicked “Close”, skip this handler
           if (e.target === closeBtn) return;
+          // If already expanded, do nothing
           if (item.classList.contains('expanded')) return;
-          item.classList.add('expanded');
 
-          // Stagger body lines’ fade-in
-          item.querySelectorAll('.body p').forEach((p, i) => {
-            p.style.animationDelay = (0.3 * i + 0.3) + 's';
+          // 3a) Compute current bounding box:
+          const rect = item.getBoundingClientRect();
+          // 3b) Temporarily “lift” the tile out of the grid:
+          item.style.position = 'absolute';
+          item.style.top      = rect.top + 'px';
+          item.style.left     = rect.left + 'px';
+          item.style.width    = rect.width + 'px';
+          item.style.height   = rect.height + 'px';
+          item.classList.add('animating');
+
+          // 3c) Force a reflow so the browser “sees” the initial absolute position
+          //     before we ask it to animate to full screen:
+          window.requestAnimationFrame(() => {
+            // 3d) Now add .expanded, which changes top/left/width/height to fill viewport:
+            item.classList.add('expanded');
+          });
+
+          // 3e) Hide siblings immediately so they don’t overlap during expansion
+          grid.querySelectorAll('.item:not(.animating)').forEach(sib => {
+            sib.style.opacity = '0';
+            sib.style.pointerEvents = 'none';
+          });
+
+          // 3f) Stagger body paragraphs so they fade in after expansion
+          item.querySelectorAll('.body p').forEach((p, idx) => {
+            p.style.animationDelay = (0.3 * idx + 0.3) + 's';
           });
         });
 
         closeBtn.addEventListener('click', e => {
           e.stopPropagation();
+          // On “Close,” reverse: remove .expanded, animate back to original rect
+          const rect = item.getBoundingClientRect(); // full‐screen rect
+          // Remove expanded state so it returns to .animating’s top/left/width/height:
           item.classList.remove('expanded');
+
+          // Computed the original grid cell’s bounding box to
+          // (It’s simpler to use getBoundingClientRect on a *same* item after removing
+          //  expanded but before grid reflows. We might need a tiny delay.)
+          window.requestAnimationFrame(() => {
+            // Temporarily set the item’s top/left/width/height to whatever it currently is:
+            item.style.top    = rect.top + 'px';
+            item.style.left   = rect.left + 'px';
+            item.style.width  = rect.width + 'px';
+            item.style.height = rect.height + 'px';
+
+            // Force a reflow so the browser sees these “starting from full-screen” values:
+            item.getBoundingClientRect();
+
+            // Now figure out the tile’s “new” rect inside the grid (shortly after we removed .expanded).
+            // We let a tiny timeout so that the grid has re-laid out
+            setTimeout(() => {
+              const newRect = item.getBoundingClientRect();
+              // Animate back:
+              item.style.top    = newRect.top + 'px';
+              item.style.left   = newRect.left + 'px';
+              item.style.width  = newRect.width + 'px';
+              item.style.height = newRect.height + 'px';
+
+              // After the 500ms transition completes, clean up inline styles:
+              setTimeout(() => {
+                item.classList.remove('animating');
+                item.style.position = '';
+                item.style.top      = '';
+                item.style.left     = '';
+                item.style.width    = '';
+                item.style.height   = '';
+                item.style.zIndex   = '';
+                // Restore siblings’ opacity and pointer‐events
+                grid.querySelectorAll('.item').forEach(sib => {
+                  sib.style.opacity = '';
+                  sib.style.pointerEvents = '';
+                });
+              }, 500); // match the 500ms transition duration
+            }, 20); 
+          });
         });
       });
     });
