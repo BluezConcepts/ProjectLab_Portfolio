@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3×3 Grid with Simultaneous Text Resize</title>
+  <title>3×3 Grid: Centered Titles + Click‐to‐Expand</title>
   <!-- Google Font: Tektur -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;700&display=swap" rel="stylesheet" />
+
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
        RESET & BOX-SIZING
@@ -25,8 +26,8 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       DEFAULT GRID VARIABLES ON :root
-       Three columns and three rows, each defaulting to 1fr
+       GRID VARIABLES ON :root
+       Start with each cell = 1fr × 1fr
     ────────────────────────────────────────────────────────────────────────── */
     :root {
       --c1: 1fr;
@@ -38,8 +39,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       GRID: fills viewport (3×3)
-       Uses CSS vars for fractions so JS and :has() can override.
+       GRID: Full viewport, 3×3
     ────────────────────────────────────────────────────────────────────────── */
     .grid {
       display: grid;
@@ -54,65 +54,25 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       HOVER-RESIZE VIA :has()
-       Each rule sets the hovered cell’s row & column to 2fr; others to 1fr.
-       At the same time, set --f:2 on the hovered .item so its text scales.
+       EACH CELL (.item):   
+       – flex centering at all times  
+       – mesh-gradient background behind  
     ────────────────────────────────────────────────────────────────────────── */
-    .grid:has(.item:nth-child(1):hover) {
-      --c1: 2fr; --c2: 1fr; --c3: 1fr;
-      --r1: 2fr; --r2: 1fr; --r3: 1fr;
-    }
-    .grid:has(.item:nth-child(2):hover) {
-      --c1: 1fr; --c2: 2fr; --c3: 1fr;
-      --r1: 2fr; --r2: 1fr; --r3: 1fr;
-    }
-    .grid:has(.item:nth-child(3):hover) {
-      --c1: 1fr; --c2: 1fr; --c3: 2fr;
-      --r1: 2fr; --r2: 1fr; --r3: 1fr;
-    }
-    .grid:has(.item:nth-child(4):hover) {
-      --c1: 2fr; --c2: 1fr; --c3: 1fr;
-      --r1: 1fr; --r2: 2fr; --r3: 1fr;
-    }
-    .grid:has(.item:nth-child(5):hover) {
-      --c1: 1fr; --c2: 2fr; --c3: 1fr;
-      --r1: 1fr; --r2: 2fr; --r3: 1fr;
-    }
-    .grid:has(.item:nth-child(6):hover) {
-      --c1: 1fr; --c2: 1fr; --c3: 2fr;
-      --r1: 1fr; --r2: 2fr; --r3: 1fr;
-    }
-    .grid:has(.item:nth-child(7):hover) {
-      --c1: 2fr; --c2: 1fr; --c3: 1fr;
-      --r1: 1fr; --r2: 1fr; --r3: 2fr;
-    }
-    .grid:has(.item:nth-child(8):hover) {
-      --c1: 1fr; --c2: 2fr; --c3: 1fr;
-      --r1: 1fr; --r2: 1fr; --r3: 2fr;
-    }
-    .grid:has(.item:nth-child(9):hover) {
-      --c1: 1fr; --c2: 1fr; --c3: 2fr;
-      --r1: 1fr; --r2: 1fr; --r3: 2fr;
-    }
-
-    /* When .item is hovered, set its --f to 2; otherwise default is 1 */
     .item {
-      --f: 1;
-      transition: --f 1s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;        /* allow title + body in expanded state */
+      align-items: center;           /* always center horizontally */
+      justify-content: center;       /* center vertically unless expanded pushes it */
+      cursor: pointer;
+      overflow: hidden;
+      color: #fff;
+      transition: opacity 200ms ease;
     }
-    .grid:has(.item:nth-child(1):hover) .item:nth-child(1) { --f: 2; }
-    .grid:has(.item:nth-child(2):hover) .item:nth-child(2) { --f: 2; }
-    .grid:has(.item:nth-child(3):hover) .item:nth-child(3) { --f: 2; }
-    .grid:has(.item:nth-child(4):hover) .item:nth-child(4) { --f: 2; }
-    .grid:has(.item:nth-child(5):hover) .item:nth-child(5) { --f: 2; }
-    .grid:has(.item:nth-child(6):hover) .item:nth-child(6) { --f: 2; }
-    .grid:has(.item:nth-child(7):hover) .item:nth-child(7) { --f: 2; }
-    .grid:has(.item:nth-child(8):hover) .item:nth-child(8) { --f: 2; }
-    .grid:has(.item:nth-child(9):hover) .item:nth-child(9) { --f: 2; }
+    .item:hover {
+      opacity: 0.9;
+    }
 
-    /* ──────────────────────────────────────────────────────────────────────────
-       MESH GRADIENT STYLES
-    ────────────────────────────────────────────────────────────────────────── */
     .gradient-wrap {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -183,37 +143,104 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       EACH CELL (.item): text with padding + simultaneous resizing
+       TITLE TEXT:
+       – Always horizontally centered via flexbox  
+       – Prevent wrapping (single line)  
+       – Responsive vw sizing  
     ────────────────────────────────────────────────────────────────────────── */
-    .item {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .item .title {
+      font-size: 1.5vw;
+      text-align: center;
+      white-space: nowrap;       /* never break mid-word */
+      overflow-wrap: normal;     /* prevent forced breaks */
+      z-index: 1;
       color: #fff;
-      overflow: hidden;
-      transition: opacity 200ms ease;
-    }
-    .item:hover {
-      opacity: 0.9;
+      text-shadow: 0 0 6px rgba(0,0,0,0.8);
+      transition: font-size 1s ease, margin-top 0.5s ease;
     }
 
-    .item .text {
-      position: relative;
-      z-index: 1;
-      text-shadow: rgba(0,0,0,0.9);
-      padding: 1rem;
-      /* border-radius: 4px; */
-      /* font-size = 1.5vw * --f;  when --f = 1, base size; when --f = 2, double size */
-      font-size: calc(1.5vw * var(--f));
-      transition: font-size 1s ease;
-      text-align: center;
-      word-break: inherit;
+    /* ──────────────────────────────────────────────────────────────────────────
+       CLICK-TO-EXPAND:  
+       When “.expanded” is added, that .item becomes full-screen.  
+    ────────────────────────────────────────────────────────────────────────── */
+    .item.expanded {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10;
+      background-color: rgba(0,0,0,0.7);
+      transition: width 0.5s ease, height 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;      /* keep title horizontally centered */
+      justify-content: flex-start;  /* push content toward top */
+    }
+    .item.expanded .title {
+      margin-top: 2rem;
+      font-size: 2.5vw;
+    }
+
+    /* Hide all other tiles when one is expanded */
+    .grid:has(.item.expanded) .item:not(.expanded) {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* BODY TEXT: hidden until expanded */
+    .body {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.5s ease, max-height 0.5s ease;
+      width: 80%;
+      margin: 1rem auto;
+      color: #fff;
+      z-index: 2;
+    }
+    .item.expanded .body {
+      opacity: 1;
+      max-height: 500px;
+      transition-delay: 0.5s;
+    }
+    .body p {
+      opacity: 0;
+      transform: translateY(10px);
+      margin-bottom: 0.75rem;
+    }
+    .item.expanded .body p {
+      animation: fadeInUp 0.5s forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* CLOSE BUTTON: hidden until expanded */
+    .close-btn {
+      display: none;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.8);
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 3;
+    }
+    .item.expanded .close-btn {
+      display: block;
+      transition-delay: 0.5s;
     }
   </style>
 </head>
 <body>
-  <div class="grid">
+  <div class="grid" id="grid">
+    <!-- Nine items: each has .title, hidden .body, and .close-btn hidden by default -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -222,19 +249,16 @@
           <div class="color c3"></div>
         </div>
       </div>
-      <div class="text">ABOUT</div>
-    </div>
-    <div class="item">
-      <div class="gradient-wrap">
-        <div class="meshgradient">
-          <div class="color c1"></div>
-          <div class="color c2"></div>
-          <div class="color c3"></div>
-          <div class="color c4"></div>
-        </div>
+      <div class="title">ABOUT</div>
+      <div class="body">
+        <p>About the project:</p>
+        <p>This container expands full-screen on click.</p>
+        <p>The body content appears line by line.</p>
+        <p>Click the close button to collapse.</p>
       </div>
-      <div class="text">Databronnen</div>
+      <button class="close-btn">Close</button>
     </div>
+
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -244,37 +268,15 @@
           <div class="color c4"></div>
         </div>
       </div>
-      <div class="text">Intellus</div>
-    </div>
-    <div class="item">
-      <div class="gradient-wrap">
-        <div class="meshgradient">
-          <div class="color c2"></div>
-          <div class="color c3"></div>
-          <div class="color c4"></div>
-        </div>
+      <div class="title">Databronnen</div>
+      <div class="body">
+        <p>Databronnen details:</p>
+        <p>Here you might list data sources.</p>
+        <p>Line by line reveal with animation.</p>
       </div>
-      <div class="text">Sentigrate</div>
+      <button class="close-btn">Close</button>
     </div>
-    <div class="item">
-      <div class="gradient-wrap">
-        <div class="meshgradient">
-          <div class="color c1"></div>
-          <div class="color c2"></div>
-          <div class="color c4"></div>
-        </div>
-      </div>
-      <div class="text">VRT</div>
-    </div>
-    <div class="item">
-      <div class="gradient-wrap">
-        <div class="meshgradient">
-          <div class="color c3"></div>
-          <div class="color c4"></div>
-        </div>
-      </div>
-      <div class="text">Colruyt</div>
-    </div>
+
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -284,17 +286,30 @@
           <div class="color c4"></div>
         </div>
       </div>
-      <div class="text">Kopenhagen</div>
+      <div class="title">Intellus</div>
+      <div class="body">
+        <p>Intellus information:</p>
+        <p>Explanation of Intellus goes here.</p>
+      </div>
+      <button class="close-btn">Close</button>
     </div>
+
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
-          <div class="color c1"></div>
           <div class="color c2"></div>
+          <div class="color c3"></div>
+          <div class="color c4"></div>
         </div>
       </div>
-      <div class="text">Labo Geel</div>
+      <div class="title">Sentigrate</div>
+      <div class="body">
+        <p>Sentigrate overview:</p>
+        <p>Some descriptive text for Sentigrate.</p>
+      </div>
+      <button class="close-btn">Close</button>
     </div>
+
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -303,54 +318,137 @@
           <div class="color c4"></div>
         </div>
       </div>
-      <div class="text">The Beacon</div>
+      <div class="title">VRT</div>
+      <div class="body">
+        <p>VRT description:</p>
+        <p>Details about VRT appear here.</p>
+      </div>
+      <button class="close-btn">Close</button>
+    </div>
+
+    <div class="item">
+      <div class="gradient-wrap">
+        <div class="meshgradient">
+          <div class="color c3"></div>
+          <div class="color c4"></div>
+        </div>
+      </div>
+      <div class="title">Colruyt</div>
+      <div class="body">
+        <p>Colruyt info:</p>
+        <p>Insert relevant content for Colruyt.</p>
+      </div>
+      <button class="close-btn">Close</button>
+    </div>
+
+    <div class="item">
+      <div class="gradient-wrap">
+        <div class="meshgradient">
+          <div class="color c1"></div>
+          <div class="color c2"></div>
+          <div class="color c3"></div>
+          <div class="color c4"></div>
+        </div>
+      </div>
+      <div class="title">Kopenhagen</div>
+      <div class="body">
+        <p>Kopenhagen details:</p>
+        <p>More info here line by line.</p>
+      </div>
+      <button class="close-btn">Close</button>
+    </div>
+
+    <div class="item">
+      <div class="gradient-wrap">
+        <div class="meshgradient">
+          <div class="color c1"></div>
+          <div class="color c2"></div>
+        </div>
+      </div>
+      <div class="title">Labo Geel</div>
+      <div class="body">
+        <p>Labo Geel summary:</p>
+        <p>Details about Labo Geel are shown here.</p>
+      </div>
+      <button class="close-btn">Close</button>
+    </div>
+
+    <div class="item">
+      <div class="gradient-wrap">
+        <div class="meshgradient">
+          <div class="color c1"></div>
+          <div class="color c2"></div>
+          <div class="color c4"></div>
+        </div>
+      </div>
+      <div class="title">The Beacon</div>
+      <div class="body">
+        <p>The Beacon info:</p>
+        <p>Line 1 of details.</p>
+        <p>Line 2 of details.</p>
+      </div>
+      <button class="close-btn">Close</button>
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const colCount = 3, rowCount = 3;
+      const grid = document.getElementById('grid');
+      const items = Array.from(document.querySelectorAll('.item'));
 
-      // Randomize grid-template vars on :root every 2.5 seconds
-      function randomizeGridVars() {
+      // 1) Randomize grid fractions every 2.5 seconds
+      const colCount = 3, rowCount = 3;
+      function randomizeGrid() {
         const cols = Array.from({ length: colCount })
           .map(() => `${Math.floor(Math.random() * 5 + 1)}fr`)
           .join(' ');
         const rows = Array.from({ length: rowCount })
           .map(() => `${Math.floor(Math.random() * 5 + 1)}fr`)
           .join(' ');
-        const root = document.documentElement;
-        const [c1, c2, c3] = cols.split(' ');
-        const [r1, r2, r3] = rows.split(' ');
-        root.style.setProperty('--c1', c1);
-        root.style.setProperty('--c2', c2);
-        root.style.setProperty('--c3', c3);
-        root.style.setProperty('--r1', r1);
-        root.style.setProperty('--r2', r2);
-        root.style.setProperty('--r3', r3);
+        document.documentElement.style.setProperty('--c1', cols.split(' ')[0]);
+        document.documentElement.style.setProperty('--c2', cols.split(' ')[1]);
+        document.documentElement.style.setProperty('--c3', cols.split(' ')[2]);
+        document.documentElement.style.setProperty('--r1', rows.split(' ')[0]);
+        document.documentElement.style.setProperty('--r2', rows.split(' ')[1]);
+        document.documentElement.style.setProperty('--r3', rows.split(' ')[2]);
       }
+      randomizeGrid();
+      setInterval(randomizeGrid, 2500);
 
-      // Randomize each .color layer’s animation delay, rotation, and scale offset
+      // 2) Mesh-gradient randomness (delay/offset/scale/rotation)
       document.querySelectorAll('.meshgradient > .color').forEach(layer => {
-        let baseDuration = 8;
-        if (layer.classList.contains('c2')) baseDuration = 10;
-        if (layer.classList.contains('c3')) baseDuration = 5;
-        if (layer.classList.contains('c4')) baseDuration = 6;
-
-        const delay = (Math.random() * baseDuration).toFixed(2) + 's';
-        layer.style.animationDelay = delay;
-
-        const initialRotation = Math.floor(Math.random() * 360);
-        const initialScale = (2.5 + Math.random()).toFixed(2);
-        const offsetX = (Math.random() * 40 - 20).toFixed(2) + '%';
-        const offsetY = (Math.random() * 40 - 20).toFixed(2) + '%';
-
-        layer.style.transform =
-          `translate(${offsetX}, ${offsetY}) scale(${initialScale}) rotate(${initialRotation}deg)`;
+        let base = 8;
+        if (layer.classList.contains('c2')) base = 10;
+        if (layer.classList.contains('c3')) base = 5;
+        if (layer.classList.contains('c4')) base = 6;
+        layer.style.animationDelay = (Math.random() * base).toFixed(2) + 's';
+        const rot = Math.floor(Math.random() * 360);
+        const scl = (2.5 + Math.random()).toFixed(2);
+        const offX = (Math.random() * 40 - 20).toFixed(2) + '%';
+        const offY = (Math.random() * 40 - 20).toFixed(2) + '%';
+        layer.style.transform = `translate(${offX}, ${offY}) scale(${scl}) rotate(${rot}deg)`;
       });
 
-      randomizeGridVars();
-      setInterval(randomizeGridVars, 2500);
+      // 3) Click-to-expand / Close logic
+      items.forEach(item => {
+        const closeBtn = item.querySelector('.close-btn');
+
+        item.addEventListener('click', e => {
+          if (e.target === closeBtn) return;
+          if (item.classList.contains('expanded')) return;
+          item.classList.add('expanded');
+
+          // Stagger body lines’ fade-in
+          item.querySelectorAll('.body p').forEach((p, i) => {
+            p.style.animationDelay = (0.3 * i + 0.3) + 's';
+          });
+        });
+
+        closeBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          item.classList.remove('expanded');
+        });
+      });
     });
   </script>
 </body>
