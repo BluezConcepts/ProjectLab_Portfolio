@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3×3 Grid: Smooth Hover + Click‐to‐Expand Animation</title>
+  <title>Smans Elias: ProjectLab Portfolio</title>
   <!-- Google Font: Tektur -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;700&display=swap" rel="stylesheet" />
@@ -50,8 +50,8 @@
       grid-template-columns: var(--c1) var(--c2) var(--c3);
       grid-template-rows:    var(--r1) var(--r2) var(--r3);
       transition:
-        grid-template-columns 800ms ease,
-        grid-template-rows    800ms ease;
+        grid-template-columns 700ms ease,
+        grid-template-rows    700ms ease;
       position: relative;
     }
 
@@ -62,6 +62,7 @@
     .grid:has(.item:nth-child(1):hover) {
       --c1: 2fr; --c2: 1fr; --c3: 1fr;
       --r1: 2fr; --r2: 1fr; --r3: 1fr;
+      
     }
     .grid:has(.item:nth-child(2):hover) {
       --c1: 1fr; --c2: 2fr; --c3: 1fr;
@@ -104,6 +105,9 @@
        – smooth opacity on hover  
     ────────────────────────────────────────────────────────────────────────── */
     .item {
+       
+      --f: 0.7;
+       /* font-size: calc(1.5vw * var(--f)); */
       position: relative;                   /* in‐grid baseline */
       display: flex;
       flex-direction: column;               /* so body can stack under title */
@@ -112,9 +116,11 @@
       cursor: pointer;
       overflow: hidden;
       color: #fff;
-      transition: opacity 300ms ease;
+      transition: --f 200ms ease;
+      padding: 1rem;
     }
     .item:hover {
+        --f: 1.5;
       opacity: 0.9;
     }
 
@@ -194,10 +200,12 @@
        – Responsive font-size; 500ms ease transitions  
     ────────────────────────────────────────────────────────────────────────── */
     .item .title {
-      font-size: 1.5vw;
+
+      font-size: calc(2vw * var(--f));
+      padding: 1rem;
       text-align: center;
-      white-space: nowrap;       /* single line, no forced breaks */
-      overflow-wrap: normal;
+      white-space: normal;       /* single line, no forced breaks */
+      overflow-wrap: break-word;
       z-index: 1;
       color: #fff;
       text-shadow: 0 0 6px rgba(0,0,0,0.8);
