@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smans Elias: ProjectLab Portfolio</title>
-  <!-- Google Fonts: Tektur (for titles) & Poppins (for body) -->
+  <!-- Google Fonts: Tektur (titles) & Poppins (body text) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Tektur:wght@400;700&display=swap" rel="stylesheet" />
 
@@ -22,7 +22,7 @@
       height: 100%;
       overflow: hidden;
       background-color: #bb1245;
-      font-family: 'Poppins', sans-serif; /* Default body font = Poppins */
+      font-family: 'Poppins', sans-serif; /* Default body = Poppins */
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -98,10 +98,10 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        EACH CELL (.item):
-       – position:relative in grid  
+       – position: relative in grid  
        – flex centering  
        – mesh‐gradient behind  
-       – hover scales text and dims slightly  
+       – hover scales text slightly  
     ────────────────────────────────────────────────────────────────────────── */
     .item {
       --f: 0.7;
@@ -248,9 +248,9 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        BODY TEXT (.body):
-       – Default hidden 
-       – Expands into a two-column flex layout
-       – Uses Poppins for paragraphs
+       – Default hidden  
+       – Expands into a two-column flex layout  
+       – Uses Poppins for paragraphs  
     ────────────────────────────────────────────────────────────────────────── */
     .body {
       opacity: 0;
@@ -289,6 +289,21 @@
     .body .right-col p {
       margin-bottom: 1rem;
       line-height: 1.5;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       IMAGE GRID (for responsive image layouts)  
+    ────────────────────────────────────────────────────────────────────────── */
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .image-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
     }
 
     /* Animate paragraphs in right column */
@@ -331,7 +346,7 @@
 <body>
   <div class="grid" id="grid">
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #1: ABOUT (Two-column layout with Poppins body text)
+         ITEM #1: ABOUT (unchanged)
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -342,16 +357,13 @@
         </div>
       </div>
 
-      <!-- Title (kept in Tektur) -->
       <div class="title">ABOUT</div>
 
-      <!-- Body (uses Poppins for paragraphs, switches to two columns when expanded) -->
       <div class="body">
-        <!-- LEFT COLUMN: Image + Concept -->
         <div class="left-col">
           <div style="text-align: center; margin-bottom: 2rem;">
             <img
-              src="elias ghibli.jpg"
+              src="/mnt/data/elias ghibli.jpg"
               alt="Elias Portrait"
               style="max-width: 180px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.3);"
             />
@@ -371,7 +383,6 @@
           </p>
         </div>
 
-        <!-- RIGHT COLUMN: Final Reflection -->
         <div class="right-col">
           <h3>Final Reflection</h3>
           <p>
@@ -394,7 +405,6 @@
 
     <!-- ────────────────────────────────────────────────────────────────────────
          ITEM #2: Databronnen
-         (Unchanged; body still uses Poppins by default)
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -405,12 +415,35 @@
           <div class="color c4"></div>
         </div>
       </div>
+
       <div class="title">Databronnen</div>
+
       <div class="body">
-        <p>Databronnen details:</p>
-        <p>Here you might list data sources.</p>
-        <p>Line by line reveal with animation.</p>
+        <!-- LEFT: Two‐image grid -->
+        <div class="left-col">
+          <h3>February 28 – Mechelen: Urban Data Detectives</h3>
+          <div class="image-grid">
+            <img src="images/databronnen1.jpeg" alt="Mechelen map of data sources" />
+            <img src="images/databronnen2.jpeg" alt="Tom Vermeylen discussion in Mechelen" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text -->
+        <div class="right-col">
+          <p>
+            In Mechelen, we stepped into the role of digital detectives, mapping every visible data source in the city—from security cameras to air quality sensors. You can explore our findings 
+            <a href="https://www.google.com/maps/d/u/0/viewer?mid=1gwOD-D_n7-X7ZGkKvh7WZtQ7MeS0lv0&amp;femb=1&amp;ll=51.02700826639706%2C4.479978638215711&amp;z=14" target="_blank" style="color: #fff; text-decoration: underline;">
+            here</a>.
+          </p>
+          <p>
+            Later that day, Tom Vermeylen led a discussion that really got us thinking about the ethics behind surveillance and mass data collection. I was shocked by how normalized surveillance has become—it’s everywhere, but most people barely notice it.
+          </p>
+          <p>
+            It was both fascinating and a bit unsettling to see how easily we could be tracked just by walking through public space. Thankfully, facial recognition AI is still tightly regulated in Belgium—but the tech is there, and it’s only getting better. This visit reminded me that smart cities are more than just connected—they’re watching, too.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
 
@@ -426,11 +459,29 @@
           <div class="color c4"></div>
         </div>
       </div>
+
       <div class="title">Intellus</div>
+
       <div class="body">
-        <p>Intellus information:</p>
-        <p>Explanation of Intellus goes here.</p>
+        <!-- LEFT: Single image -->
+        <div class="left-col">
+          <h3>March 14 – Intellus</h3>
+          <div class="image-grid">
+            <img src="images/intellus.jpeg" alt="Intellus office & SAP architecture" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text -->
+        <div class="right-col">
+          <p>
+            At Intellus, we got a peek into what it’s like to work as a consultant in the data world. The SAP architecture session stood out—complex systems, data pipelines, and business-critical infrastructure. While I found SAP a bit too technical for my taste, it was still eye-opening to see how data keeps huge companies running.
+          </p>
+          <p>
+            What stuck with me more than the tech was the way they described the job. They don’t expect you to be an expert on day one. You learn on the job, and they guide you. As someone who finds the post-graduation world of data pretty daunting, this made me feel more at ease.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
 
@@ -445,11 +496,30 @@
           <div class="color c4"></div>
         </div>
       </div>
+
       <div class="title">Sentigrate</div>
+
       <div class="body">
-        <p>Sentigrate overview:</p>
-        <p>Some descriptive text for Sentigrate.</p>
+        <!-- LEFT: Two images -->
+        <div class="left-col">
+          <h3>March 21 – Sentigrate</h3>
+          <div class="image-grid">
+            <img src="images/sentigrate.JPG" alt="Sentigrate platform demo" />
+            <img src="images/sentigrate2.jpeg" alt="Team at Sentigrate" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text -->
+        <div class="right-col">
+          <p>
+            At Sentigrate, I got to try out IntelliProve firsthand. The idea that a smartphone camera can scan your face and return health markers in seconds is kind of mind-blowing. Sentigrate builds the platforms behind this kind of medtech—connecting real-world sensors to scalable cloud architectures.
+          </p>
+          <p>
+            The team was young, ambitious, and clearly passionate about using data to improve lives. From bionic feet to stress sensors, they showed how raw data can be turned into meaningful health insights. It was inspiring to see how data science becomes something tangible, even personal.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
 
@@ -464,16 +534,40 @@
           <div class="color c4"></div>
         </div>
       </div>
+
       <div class="title">VRT</div>
+
       <div class="body">
-        <p>VRT description:</p>
-        <p>Details about VRT appear here.</p>
+        <!-- LEFT: Four images -->
+        <div class="left-col">
+          <h3>March 28 – VRT</h3>
+          <div class="image-grid">
+            <img src="images/vrt.JPG" alt="VRT A/B testing demo" />
+            <img src="images/vrt2.JPG" alt="VRT production workflow" />
+            <img src="images/vrt4.JPG" alt="VRT metadata archive" />
+            <img src="images/vrt5.JPG" alt="VRT design & data meeting" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text -->
+        <div class="right-col">
+          <p>
+            This visit felt surprisingly familiar. I was especially intrigued by how they use AI to test banners, headers, and layouts. Coming from a design background, I loved the idea of A/B testing creative elements using real-time feedback. It’s where data, design, and psychology meet.
+          </p>
+          <p>
+            It was also cool to see how deeply data runs through their workflow—from content planning to metadata for archive footage. VRT is clearly aiming for a future where every part of production is smart and adaptive.
+          </p>
+          <p>
+            At one point, they mentioned that working there can feel chaotic, and honestly, that stuck with me. I’ve had work experiences like that before and didn’t love it. Still, I left feeling inspired by how creativity and data can support each other.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
 
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #6: Colruyt
+         ITEM #6: Colruyt (already populated)
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -482,16 +576,76 @@
           <div class="color c4"></div>
         </div>
       </div>
+
       <div class="title">Colruyt</div>
+
       <div class="body">
-        <p>Colruyt info:</p>
-        <p>Insert relevant content for Colruyt.</p>
+        <!-- LEFT: Three‐image grid for Colruyt -->
+        <div class="left-col">
+          <h3>April 4 – Colruyt Hackathon</h3>
+          <div class="image-grid">
+            <img src="images/colruyt1.jpeg" alt="Colruyt Group exterior with students" />
+            <img src="images/colruyt2.jpeg" alt="Colruyt Hackathon presentation" />
+            <img src="images/colruyt3.jpeg" alt="Colruyt Hackathon group discussion" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text -->
+        <div class="right-col">
+          <p>
+            This was one of the most intense visits. The hackathon was fast-paced and packed with info. I appreciated the “blind date”–style rotations—it was interesting to see how many different roles exist in the data world. But it was also a bit too much at times. The sheer number of job types made it hard to get a clear picture.
+          </p>
+          <p>
+            What felt more familiar was the hackathon itself. A lot of the challenge leaned into marketing and business logic, so I was able to use my previous experience there. It was a reminder that my creative background is still very relevant in data-driven spaces.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
 
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #7: Kopenhagen
+         ITEM #7: Labo Geel (NEW: four‐image grid)
+         ──────────────────────────────────────────────────────────────────────── -->
+    <div class="item">
+      <div class="gradient-wrap">
+        <div class="meshgradient">
+          <div class="color c1"></div>
+          <div class="color c2"></div>
+        </div>
+      </div>
+
+      <div class="title">Labo Geel</div>
+
+      <div class="body">
+        <!-- LEFT: Four images for Labo Geel -->
+        <div class="left-col">
+          <h3>May 9 – Geel (Lifesnaps Project)</h3>
+          <div class="image-grid">
+            <img src="images/labogeel1.jpeg" alt="Presentation on wearables for stress monitoring" />
+            <img src="images/labogeel2.jpeg" alt="Live demo: Emfit QS dashboard" />
+            <img src="images/labogeel3.jpeg" alt="Close-up of Emfit sensor & user interface" />
+            <img src="images/labogeel4.jpeg" alt="Different screen views: data and surveillance feed" />
+            <img src="images/labogeel5.jpeg" alt="Exterior shot: Thomas More Campus Geel" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text (unchanged, except image references removed) -->
+        <div class="right-col">
+          <p>
+            In Geel, we started working with the Lifesnaps dataset—over 71 million rows of Fitbit data tied to mood tracking. At first, it was overwhelming. But slowly, as we cleaned the data, explored it, and started building basic models, it became one of the most rewarding projects of the year.
+          </p>
+          <p>
+            This was the first time I saw up close how data could genuinely help people. Connecting biometric signals to mental health trends was powerful. It showed me how data science can be deeply human.
+          </p>
+        </div>
+      </div>
+
+      <button class="close-btn">Close</button>
+    </div>
+
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #8: Copenhagen (slight tweak: ensure images don’t run off)
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -502,29 +656,36 @@
           <div class="color c4"></div>
         </div>
       </div>
-      <div class="title">Kopenhagen</div>
-      <div class="body">
-        <p>Kopenhagen details:</p>
-        <p>More info here line by line.</p>
-      </div>
-      <button class="close-btn">Close</button>
-    </div>
 
-    <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #8: Labo Geel
-         ──────────────────────────────────────────────────────────────────────── -->
-    <div class="item">
-      <div class="gradient-wrap">
-        <div class="meshgradient">
-          <div class="color c1"></div>
-          <div class="color c2"></div>
+      <div class="title">Kopenhagen</div>
+
+      <div class="body">
+        <!-- LEFT: Five images for Copenhagen (wraps onto two columns responsively) -->
+        <div class="left-col">
+          <h3>April 23–24 – Copenhagen Hackathon</h3>
+          <div class="image-grid">
+            <img src="images/cph5.jpeg" alt="Copenhagen hackathon brainstorming" />
+            <img src="images/cph6.jpeg" alt="Copenhagen hackathon team photo" />
+            <img src="images/cph7.jpeg" alt="Copenhagen hackathon coding session" />
+            <img src="images/cph8.jpeg" alt="Copenhagen hackathon presentation" />
+            <img src="images/cph9.jpeg" alt="Copenhagen hackathon group" />
+          </div>
+        </div>
+
+        <!-- RIGHT: Text -->
+        <div class="right-col">
+          <p>
+            This trip meant a lot to me. I joined partly to push myself out of my comfort zone, to meet people, and to feel more connected—and that happened. I bonded with classmates, laughed a lot, had real talks, and even saw my teachers more as people. When it was over, I genuinely felt sad. I even said so in the group chat, and the kind replies made it even better.
+          </p>
+          <p>
+            The hackathon itself had ups and downs. At first, I felt super insecure and underqualified. But I quickly saw that most others weren’t seasoned data experts either. The project, focused on Politiken’s subscriber growth, felt more like a branding brief than a true data challenge. We were missing key information and didn’t get to interact much with the KEA students, which felt like a missed opportunity.
+          </p>
+          <p>
+            Even so, I leaned into what I knew—branding, communication, storytelling—and still found value in the process. But honestly, the biggest takeaway wasn’t the hackathon. It was the people, the shared experience, and the feeling of belonging.
+          </p>
         </div>
       </div>
-      <div class="title">Labo Geel</div>
-      <div class="body">
-        <p>Labo Geel summary:</p>
-        <p>Details about Labo Geel are shown here.</p>
-      </div>
+
       <button class="close-btn">Close</button>
     </div>
 
@@ -539,12 +700,25 @@
           <div class="color c4"></div>
         </div>
       </div>
+
       <div class="title">The Beacon</div>
+
       <div class="body">
-        <p>The Beacon info:</p>
-        <p>Line 1 of details.</p>
-        <p>Line 2 of details.</p>
+        <!-- LEFT: (no images provided for The Beacon) -->
+        <div class="left-col">
+          <h3>February 19 – The Beacon (Antwerp)</h3>
+          <p>
+            The Beacon was all about smart logistics and the future of port operations. We got to see how data is slowly becoming the backbone of international shipping. Companies like Dashdoc and Dockflow are creating systems to cut down wasted time, reduce costs, and streamline transport flows. Even fruit containers are now monitored in real-time for temperature changes.
+          </p>
+          <p>
+            What stood out most wasn’t just the tech—it was the scale of change. Antwerp’s port isn’t just modernizing; it’s transforming into a living data system. From AI-driven routing to drone inspections, we’re watching the old logistics world evolve into something more intelligent, more responsive, and more connected.
+          </p>
+          <p>
+            Even though this visit didn’t grip me personally as much as some others, it gave me a clear picture of how digital infrastructure is reshaping one of Belgium’s biggest industries.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
   </div>
@@ -592,14 +766,14 @@
         const closeBtn = item.querySelector('.close-btn');
 
         item.addEventListener('click', e => {
-          // If user clicked “Close,” skip this handler
+          // If user clicked “Close,” skip
           if (e.target === closeBtn) return;
           // If already expanded, do nothing
           if (item.classList.contains('expanded')) return;
 
-          // 3a) Compute current bounding box:
+          // 3a) Compute bounding box
           const rect = item.getBoundingClientRect();
-          // 3b) Take tile out of grid:
+          // 3b) Take tile out of grid
           item.style.position = 'absolute';
           item.style.top      = rect.top + 'px';
           item.style.left     = rect.left + 'px';
@@ -607,13 +781,13 @@
           item.style.height   = rect.height + 'px';
           item.classList.add('animating');
 
-          // 3c) Force reflow so browser “sees” absolute position
+          // 3c) Force reflow
           window.requestAnimationFrame(() => {
-            // 3d) Add .expanded → fills viewport
+            // 3d) Add .expanded → fill viewport
             item.classList.add('expanded');
           });
 
-          // 3e) Hide siblings so they don’t overlap
+          // 3e) Hide siblings
           grid.querySelectorAll('.item:not(.animating)').forEach(sib => {
             sib.style.opacity = '0';
             sib.style.pointerEvents = 'none';
@@ -627,7 +801,7 @@
 
         closeBtn.addEventListener('click', e => {
           e.stopPropagation();
-          // On “Close,” remove .expanded, animate back
+          // On Close, reverse .expanded
           const rect = item.getBoundingClientRect(); // full-screen rect
           item.classList.remove('expanded');
 
@@ -636,7 +810,6 @@
             item.style.left   = rect.left + 'px';
             item.style.width  = rect.width + 'px';
             item.style.height = rect.height + 'px';
-
             item.getBoundingClientRect(); // force reflow
 
             setTimeout(() => {
@@ -659,7 +832,7 @@
                   sib.style.opacity = '';
                   sib.style.pointerEvents = '';
                 });
-              }, 500);
+              }, 500); // match 500ms transition
             }, 20);
           });
         });
