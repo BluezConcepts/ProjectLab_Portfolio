@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smans Elias: ProjectLab Portfolio</title>
-  <!-- Google Font: Tektur -->
+  <!-- Google Fonts: Tektur (for titles) & Poppins (for body) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Tektur:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
@@ -22,12 +22,12 @@
       height: 100%;
       overflow: hidden;
       background-color: #bb1245;
-      font-family: 'Tektur', sans-serif;
+      font-family: 'Poppins', sans-serif; /* Default body font = Poppins */
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
        GRID VARIABLES ON :root
-       Start with each cell = 1fr × 1fr
+       Start each cell = 1fr × 1fr
     ────────────────────────────────────────────────────────────────────────── */
     :root {
       --c1: 1fr;
@@ -40,7 +40,7 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        GRID: full viewport, 3×3  
-       Now transitions over 500ms ease for hover resizing
+       Transition for hover resizing  
     ────────────────────────────────────────────────────────────────────────── */
     .grid {
       display: grid;
@@ -57,12 +57,11 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        HOVER-RESIZE VIA :has()
-       Each hovered .item temporarily sets its row & column to 2fr
+       Tile under hover expands to 2fr × 2fr  
     ────────────────────────────────────────────────────────────────────────── */
     .grid:has(.item:nth-child(1):hover) {
       --c1: 2fr; --c2: 1fr; --c3: 1fr;
       --r1: 2fr; --r2: 1fr; --r3: 1fr;
-      
     }
     .grid:has(.item:nth-child(2):hover) {
       --c1: 1fr; --c2: 2fr; --c3: 1fr;
@@ -99,20 +98,18 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        EACH CELL (.item):
-       – base is position: relative in grid  
-       – flex centering for title/body  
-       – mesh-gradient background behind  
-       – smooth opacity on hover  
+       – position:relative in grid  
+       – flex centering  
+       – mesh‐gradient behind  
+       – hover scales text and dims slightly  
     ────────────────────────────────────────────────────────────────────────── */
     .item {
-       
       --f: 0.7;
-       /* font-size: calc(1.5vw * var(--f)); */
-      position: relative;                   /* in‐grid baseline */
+      position: relative;
       display: flex;
-      flex-direction: column;               /* so body can stack under title */
-      align-items: center;                  /* horizontal centering */
-      justify-content: center;              /* vertical centering if not expanded */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       overflow: hidden;
       color: #fff;
@@ -120,7 +117,7 @@
       padding: 1rem;
     }
     .item:hover {
-        --f: 1.5;
+      --f: 1.5;
       opacity: 0.9;
     }
 
@@ -194,36 +191,37 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       TITLE (.title):
-       – Always centered (flex in .item does that)  
-       – Prevent wrapping so “Databronnen” etc. never split mid-word  
-       – Responsive font-size; 500ms ease transitions  
+       TITLE (.title) & HEADINGS:
+       – Keep in Tektur, centered  
+       – Responsive sizing & smooth transition  
     ────────────────────────────────────────────────────────────────────────── */
-    .item .title {
-
+    .title,
+    .left-col h3,
+    .right-col h3 {
+      font-family: 'Tektur', serif;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+      margin-bottom: 0.5rem;
+    }
+    .title {
       font-size: calc(2vw * var(--f));
       padding: 1rem;
-      text-align: center;
-      white-space: normal;       /* single line, no forced breaks */
-      overflow-wrap: break-word;
-      z-index: 1;
-      color: #fff;
-      text-shadow: 0 0 6px rgba(0,0,0,0.8);
       transition:
         font-size 500ms ease,
         margin-top 500ms ease;
     }
+    .item.expanded .title {
+      margin-top: 2rem;
+      font-size: 2.5vw;
+    }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       CLICK-TO-EXPAND:  
-       We use two helper classes on the clicked tile:  
-         • .animating – holds initial absolute position + transitions  
-         • .expanded  – the final full‐screen state (top:0, left:0, w/h:100vw×100vh)  
+       CLICK-TO-EXPAND: helper classes  
     ────────────────────────────────────────────────────────────────────────── */
     .item.animating {
-      position: absolute;       /* take it out of the grid flow */
+      position: absolute;
       z-index: 10;
-      /* we’ll set inline top/left/width/height via JS */
       transition:
         top 500ms ease,
         left 500ms ease,
@@ -231,23 +229,18 @@
         height 500ms ease;
     }
     .item.expanded {
-      top: 0 !important;        /* move to viewport top */
-      left: 0 !important;       /* move to viewport left */
-      width: 100vw !important;  /* expand full width */
-      height: 100vh !important; /* expand full height */
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
       background-color: rgba(0,0,0,0.7);
       display: flex;
-      flex-direction: column;    /* so title + body stack */
-      align-items: center;       /* keep title centered horizontally */
-      justify-content: flex-start; /* push content toward top */
-    }
-    /* Once expanded, bump the title downward */
-    .item.expanded .title {
-      margin-top: 2rem;
-      font-size: 2.5vw;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
 
-    /* Hide siblings immediately when one is expanded */
+    /* Hide siblings when expanded */
     .grid:has(.item.expanded) .item:not(.expanded) {
       opacity: 0;
       pointer-events: none;
@@ -255,30 +248,55 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        BODY TEXT (.body):
-       – hidden until expanded  
-       – then fades/unwraps over 500ms
+       – Default hidden 
+       – Expands into a two-column flex layout
+       – Uses Poppins for paragraphs
     ────────────────────────────────────────────────────────────────────────── */
     .body {
       opacity: 0;
       max-height: 0;
       overflow: hidden;
       transition: opacity 500ms ease, max-height 500ms ease;
-      width: 80%;
-      margin: 1rem auto;
+      width: 100%;
+      margin-top: 1rem;
       color: #fff;
       z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .item.expanded .body {
       opacity: 1;
-      max-height: 500px;
-      transition-delay: 0.5s;  /* wait for tile to finish expanding */
+      max-height: 2000px;
+      transition-delay: 0.5s;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-start;
     }
-    .body p {
+
+    /* Left & Right columns inside .body */
+    .body .left-col,
+    .body .right-col {
+      width: 45%;
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif; /* Body text = Poppins */
+    }
+    .body .left-col h3,
+    .body .right-col h3 {
+      font-size: 1.5rem;
+    }
+    .body .left-col p,
+    .body .right-col p {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Animate paragraphs in right column */
+    .body .right-col p {
       opacity: 0;
       transform: translateY(10px);
-      margin-bottom: 0.75rem;
     }
-    .item.expanded .body p {
+    .item.expanded .right-col p {
       animation: fadeInUp 0.5s forwards;
     }
     @keyframes fadeInUp {
@@ -290,7 +308,6 @@
 
     /* ──────────────────────────────────────────────────────────────────────────
        CLOSE BUTTON (.close-btn):
-       – hidden until expanded, then appears
     ────────────────────────────────────────────────────────────────────────── */
     .close-btn {
       display: none;
@@ -313,7 +330,9 @@
 
 <body>
   <div class="grid" id="grid">
-    <!-- 9 items: each has .title, a hidden .body, and a hidden close button -->
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #1: ABOUT (Two-column layout with Poppins body text)
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -322,16 +341,61 @@
           <div class="color c3"></div>
         </div>
       </div>
+
+      <!-- Title (kept in Tektur) -->
       <div class="title">ABOUT</div>
+
+      <!-- Body (uses Poppins for paragraphs, switches to two columns when expanded) -->
       <div class="body">
-        <p>About the project:</p>
-        <p>This container expands full‐screen on click.</p>
-        <p>The body content appears line by line.</p>
-        <p>Click the close button to collapse.</p>
+        <!-- LEFT COLUMN: Image + Concept -->
+        <div class="left-col">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <img
+              src="elias ghibli.jpg"
+              alt="Elias Portrait"
+              style="max-width: 180px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.3);"
+            />
+          </div>
+          <h3>Inspiration & Concept</h3>
+          <p>
+            This website began as a visual experiment inspired by two seemingly opposite ideas: Langton’s Ant and Mondriaan’s grids.
+          </p>
+          <p>
+            Langton’s Ant—a cellular automaton with chaotic yet emergent behavior—symbolizes how simple rules can lead to complex systems. I wanted to mirror that idea in a visual way: a grid-based interface that reacts and reshapes itself with minimal interaction.
+          </p>
+          <p>
+            Mondriaan’s rigid compositions, on the other hand, introduced a sense of structure and visual balance. Combining both worlds led me to a system that’s alive yet controlled—a modular, responsive, interactive grid that’s as functional as it is aesthetic.
+          </p>
+          <p>
+            Later in the process, I layered in animated mesh gradients to break the uniformity and add a playful, sensory element. The goal wasn’t just clarity, but curiosity. The gradients behave like mood—subtle, shifting, and unpredictable—reflecting the dynamic nature of what I’ve learned.
+          </p>
+        </div>
+
+        <!-- RIGHT COLUMN: Final Reflection -->
+        <div class="right-col">
+          <h3>Final Reflection</h3>
+          <p>
+            Throughout this course, the company visits have been genuinely eye-opening. Before this experience, I had only a vague idea of the many roles and applications surrounding data. I’ve learned that data isn't just numbers in dashboards—it’s an entire ecosystem of interpretation, strategy, and impact.
+          </p>
+          <p>
+            Seeing how different companies—each with their own approach and philosophy—leverage data gave me a much deeper appreciation for the field. One highlight was visiting Sentigrate, where biometric data was used in real time through a smartphone’s selfie camera to track facial expressions. That tangible application of data was incredibly exciting and made the possibilities feel real. I was also fascinated by how data can be visualized in ways that aren't just beautiful but also deeply insightful.
+          </p>
+          <p>
+            Beyond the academic growth, I’ve deeply enjoyed the “non-classroom” format of this course. Getting out of the usual school setting and immersing myself in real environments gave me energy and inspiration I hadn’t felt in a long time. It allowed me to connect more naturally with classmates—I’ve made new friendships, built stronger bonds, and felt more like part of a group. Especially after the Copenhagen trip, I returned with a genuine sense of belonging and motivation. It reminded me how important social connection is to learning and personal growth.
+          </p>
+          <p>
+            These visits helped ease some of the stress I had about what life might look like after graduation. I used to worry whether there would be a clear path for me in the data world, but now I feel inspired and better prepared. I’ve grown both technically and personally—I’ve gained confidence in my curiosity, and I now see myself not just as a student, but as a developing professional. Going forward, I want to explore how data-driven systems can become more human-centered. I’m especially drawn to areas where data, storytelling, and design intersect. This experience hasn’t just informed my goals—it’s shaped them.
+          </p>
+        </div>
       </div>
+
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #2: Databronnen
+         (Unchanged; body still uses Poppins by default)
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -350,6 +414,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #3: Intellus
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -367,6 +434,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #4: Sentigrate
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -383,6 +453,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #5: VRT
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -399,6 +472,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #6: Colruyt
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -414,6 +490,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #7: Kopenhagen
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -431,6 +510,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #8: Labo Geel
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -446,6 +528,9 @@
       <button class="close-btn">Close</button>
     </div>
 
+    <!-- ────────────────────────────────────────────────────────────────────────
+         ITEM #9: The Beacon
+         ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
         <div class="meshgradient">
@@ -507,14 +592,14 @@
         const closeBtn = item.querySelector('.close-btn');
 
         item.addEventListener('click', e => {
-          // If user clicked “Close”, skip this handler
+          // If user clicked “Close,” skip this handler
           if (e.target === closeBtn) return;
           // If already expanded, do nothing
           if (item.classList.contains('expanded')) return;
 
           // 3a) Compute current bounding box:
           const rect = item.getBoundingClientRect();
-          // 3b) Temporarily “lift” the tile out of the grid:
+          // 3b) Take tile out of grid:
           item.style.position = 'absolute';
           item.style.top      = rect.top + 'px';
           item.style.left     = rect.left + 'px';
@@ -522,56 +607,45 @@
           item.style.height   = rect.height + 'px';
           item.classList.add('animating');
 
-          // 3c) Force a reflow so the browser “sees” the initial absolute position
-          //     before we ask it to animate to full screen:
+          // 3c) Force reflow so browser “sees” absolute position
           window.requestAnimationFrame(() => {
-            // 3d) Now add .expanded, which changes top/left/width/height to fill viewport:
+            // 3d) Add .expanded → fills viewport
             item.classList.add('expanded');
           });
 
-          // 3e) Hide siblings immediately so they don’t overlap during expansion
+          // 3e) Hide siblings so they don’t overlap
           grid.querySelectorAll('.item:not(.animating)').forEach(sib => {
             sib.style.opacity = '0';
             sib.style.pointerEvents = 'none';
           });
 
-          // 3f) Stagger body paragraphs so they fade in after expansion
-          item.querySelectorAll('.body p').forEach((p, idx) => {
+          // 3f) Stagger fade-in for right-col paragraphs
+          item.querySelectorAll('.right-col p').forEach((p, idx) => {
             p.style.animationDelay = (0.3 * idx + 0.3) + 's';
           });
         });
 
         closeBtn.addEventListener('click', e => {
           e.stopPropagation();
-          // On “Close,” reverse: remove .expanded, animate back to original rect
-          const rect = item.getBoundingClientRect(); // full‐screen rect
-          // Remove expanded state so it returns to .animating’s top/left/width/height:
+          // On “Close,” remove .expanded, animate back
+          const rect = item.getBoundingClientRect(); // full-screen rect
           item.classList.remove('expanded');
 
-          // Computed the original grid cell’s bounding box to
-          // (It’s simpler to use getBoundingClientRect on a *same* item after removing
-          //  expanded but before grid reflows. We might need a tiny delay.)
           window.requestAnimationFrame(() => {
-            // Temporarily set the item’s top/left/width/height to whatever it currently is:
             item.style.top    = rect.top + 'px';
             item.style.left   = rect.left + 'px';
             item.style.width  = rect.width + 'px';
             item.style.height = rect.height + 'px';
 
-            // Force a reflow so the browser sees these “starting from full-screen” values:
-            item.getBoundingClientRect();
+            item.getBoundingClientRect(); // force reflow
 
-            // Now figure out the tile’s “new” rect inside the grid (shortly after we removed .expanded).
-            // We let a tiny timeout so that the grid has re-laid out
             setTimeout(() => {
               const newRect = item.getBoundingClientRect();
-              // Animate back:
               item.style.top    = newRect.top + 'px';
               item.style.left   = newRect.left + 'px';
               item.style.width  = newRect.width + 'px';
               item.style.height = newRect.height + 'px';
 
-              // After the 500ms transition completes, clean up inline styles:
               setTimeout(() => {
                 item.classList.remove('animating');
                 item.style.position = '';
@@ -580,13 +654,13 @@
                 item.style.width    = '';
                 item.style.height   = '';
                 item.style.zIndex   = '';
-                // Restore siblings’ opacity and pointer‐events
+                // Restore siblings
                 grid.querySelectorAll('.item').forEach(sib => {
                   sib.style.opacity = '';
                   sib.style.pointerEvents = '';
                 });
-              }, 500); // match the 500ms transition duration
-            }, 20); 
+              }, 500);
+            }, 20);
           });
         });
       });
