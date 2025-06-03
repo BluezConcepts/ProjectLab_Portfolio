@@ -97,11 +97,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       EACH CELL (.item):
-       – position: relative in grid  
-       – flex centering  
-       – mesh‐gradient behind  
-       – hover scales text slightly  
+       EACH CELL (.item):: position: relative in grid: flex centering: mesh‐gradient behind: hover scales text slightly  
     ────────────────────────────────────────────────────────────────────────── */
     .item {
       --f: 0.7;
@@ -191,9 +187,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       TITLE (.title) & HEADINGS:
-       – Keep in Tektur, centered  
-       – Responsive sizing & smooth transition  
+       TITLE (.title) & HEADINGS:: Keep in Tektur, centered: Responsive sizing & smooth transition  
     ────────────────────────────────────────────────────────────────────────── */
     .title,
     .left-col h3,
@@ -247,10 +241,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       BODY TEXT (.body):
-       – Default hidden  
-       – Expands into a two-column flex layout  
-       – Uses Poppins for paragraphs  
+       BODY TEXT (.body):: Default hidden: Expands into a two-column flex layout: Uses Poppins for paragraphs  
     ────────────────────────────────────────────────────────────────────────── */
     .body {
       opacity: 0;
@@ -296,8 +287,10 @@
     ────────────────────────────────────────────────────────────────────────── */
     .image-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      /* We decreased the min‐width from 200px to 120px */
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 8px;
+      margin-bottom: 1rem;
     }
     .image-grid img {
       width: 100%;
@@ -346,7 +339,7 @@
 <body>
   <div class="grid" id="grid">
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #1: ABOUT (unchanged)
+         ITEM #1: ABOUT 
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -373,29 +366,29 @@
             This website began as a visual experiment inspired by two seemingly opposite ideas: Langton’s Ant and Mondriaan’s grids.
           </p>
           <p>
-            Langton’s Ant—a cellular automaton with chaotic yet emergent behavior—symbolizes how simple rules can lead to complex systems. I wanted to mirror that idea in a visual way: a grid-based interface that reacts and reshapes itself with minimal interaction.
+            Langton’s Ant, a cellular automaton with chaotic yet emergent behavior, symbolizes how simple rules can lead to complex systems. I wanted to mirror that idea in a visual way: a grid-based interface that reacts and reshapes itself with minimal interaction.
           </p>
           <p>
-            Mondriaan’s rigid compositions, on the other hand, introduced a sense of structure and visual balance. Combining both worlds led me to a system that’s alive yet controlled—a modular, responsive, interactive grid that’s as functional as it is aesthetic.
+            Mondriaan’s rigid compositions, on the other hand, introduced a sense of structure and visual balance. Combining both worlds led me to a system that’s alive yet controlled, a modular, responsive, interactive grid that’s as functional as it is aesthetic.
           </p>
           <p>
-            Later in the process, I layered in animated mesh gradients to break the uniformity and add a playful, sensory element. The goal wasn’t just clarity, but curiosity. The gradients behave like mood—subtle, shifting, and unpredictable—reflecting the dynamic nature of what I’ve learned.
+            Later in the process, I layered in animated mesh gradients to break the uniformity and add a playful, sensory element. The goal wasn’t just clarity, but curiosity. The gradients behave like mood, subtle, shifting, and unpredictable, reflecting the dynamic nature of what I’ve learned.
           </p>
         </div>
 
         <div class="right-col">
           <h3>Final Reflection</h3>
           <p>
-            Throughout this course, the company visits have been genuinely eye-opening. Before this experience, I had only a vague idea of the many roles and applications surrounding data. I’ve learned that data isn't just numbers in dashboards—it’s an entire ecosystem of interpretation, strategy, and impact.
+            Throughout this course, the company visits have been genuinely eye-opening. Before this experience, I had only a vague idea of the many roles and applications surrounding data. I’ve learned that data isn't just numbers in dashboards, it’s an entire ecosystem of interpretation, strategy, and impact.
           </p>
           <p>
-            Seeing how different companies—each with their own approach and philosophy—leverage data gave me a much deeper appreciation for the field. One highlight was visiting Sentigrate, where biometric data was used in real time through a smartphone’s selfie camera to track facial expressions. That tangible application of data was incredibly exciting and made the possibilities feel real. I was also fascinated by how data can be visualized in ways that aren't just beautiful but also deeply insightful.
+            Seeing how different companies, each with their own approach and philosophy, leverage data gave me a much deeper appreciation for the field. One highlight was visiting Sentigrate, where biometric data was used in real time through a smartphone’s selfie camera to track facial expressions. That tangible application of data was incredibly exciting and made the possibilities feel real. I was also fascinated by how data can be visualized in ways that aren't just beautiful but also deeply insightful.
           </p>
           <p>
-            Beyond the academic growth, I’ve deeply enjoyed the “non-classroom” format of this course. Getting out of the usual school setting and immersing myself in real environments gave me energy and inspiration I hadn’t felt in a long time. It allowed me to connect more naturally with classmates—I’ve made new friendships, built stronger bonds, and felt more like part of a group. Especially after the Copenhagen trip, I returned with a genuine sense of belonging and motivation. It reminded me how important social connection is to learning and personal growth.
+            Beyond the academic growth, I’ve deeply enjoyed the “non-classroom” format of this course. Getting out of the usual school setting and immersing myself in real environments gave me energy and inspiration I hadn’t felt in a long time. It allowed me to connect more naturally with classmates, I’ve made new friendships, built stronger bonds, and felt more like part of a group. Especially after the Copenhagen trip, I returned with a genuine sense of belonging and motivation. It reminded me how important social connection is to learning and personal growth.
           </p>
           <p>
-            These visits helped ease some of the stress I had about what life might look like after graduation. I used to worry whether there would be a clear path for me in the data world, but now I feel inspired and better prepared. I’ve grown both technically and personally—I’ve gained confidence in my curiosity, and I now see myself not just as a student, but as a developing professional. Going forward, I want to explore how data-driven systems can become more human-centered. I’m especially drawn to areas where data, storytelling, and design intersect. This experience hasn’t just informed my goals—it’s shaped them.
+            These visits helped ease some of the stress I had about what life might look like after graduation. I used to worry whether there would be a clear path for me in the data world, but now I feel inspired and better prepared. I’ve grown both technically and personally, I’ve gained confidence in my curiosity, and I now see myself not just as a student, but as a developing professional. Going forward, I want to explore how data-driven systems can become more human-centered. I’m especially drawn to areas where data, storytelling, and design intersect. This experience hasn’t just informed my goals, it’s shaped them.
           </p>
         </div>
       </div>
@@ -421,7 +414,7 @@
       <div class="body">
         <!-- LEFT: Two‐image grid -->
         <div class="left-col">
-          <h3>February 28 – Mechelen: Urban Data Detectives</h3>
+          <h3>February 28: Mechelen: Urban Data Detectives</h3>
           <div class="image-grid">
             <img src="images/databronnen1.jpeg" alt="Mechelen map of data sources" />
             <img src="images/databronnen2.jpeg" alt="Tom Vermeylen discussion in Mechelen" />
@@ -431,15 +424,15 @@
         <!-- RIGHT: Text -->
         <div class="right-col">
           <p>
-            In Mechelen, we stepped into the role of digital detectives, mapping every visible data source in the city—from security cameras to air quality sensors. You can explore our findings 
+            In Mechelen, we stepped into the role of digital detectives, mapping every visible data source in the city, from security cameras to air quality sensors. You can explore our findings 
             <a href="https://www.google.com/maps/d/u/0/viewer?mid=1gwOD-D_n7-X7ZGkKvh7WZtQ7MeS0lv0&amp;femb=1&amp;ll=51.02700826639706%2C4.479978638215711&amp;z=14" target="_blank" style="color: #fff; text-decoration: underline;">
             here</a>.
           </p>
           <p>
-            Later that day, Tom Vermeylen led a discussion that really got us thinking about the ethics behind surveillance and mass data collection. I was shocked by how normalized surveillance has become—it’s everywhere, but most people barely notice it.
+            Later that day, Tom Vermeylen led a discussion that really got us thinking about the ethics behind surveillance and mass data collection. I was shocked by how normalized surveillance has become, it’s everywhere, but most people barely notice it.
           </p>
           <p>
-            It was both fascinating and a bit unsettling to see how easily we could be tracked just by walking through public space. Thankfully, facial recognition AI is still tightly regulated in Belgium—but the tech is there, and it’s only getting better. This visit reminded me that smart cities are more than just connected—they’re watching, too.
+            It was both fascinating and a bit unsettling to see how easily we could be tracked just by walking through public space. Thankfully, facial recognition AI is still tightly regulated in Belgium, but the tech is there, and it’s only getting better. This visit reminded me that smart cities are more than just connected, they’re watching, too.
           </p>
         </div>
       </div>
@@ -465,7 +458,7 @@
       <div class="body">
         <!-- LEFT: Single image -->
         <div class="left-col">
-          <h3>March 14 – Intellus</h3>
+          <h3>March 14: Intellus</h3>
           <div class="image-grid">
             <img src="images/intellus.jpeg" alt="Intellus office & SAP architecture" />
           </div>
@@ -474,7 +467,7 @@
         <!-- RIGHT: Text -->
         <div class="right-col">
           <p>
-            At Intellus, we got a peek into what it’s like to work as a consultant in the data world. The SAP architecture session stood out—complex systems, data pipelines, and business-critical infrastructure. While I found SAP a bit too technical for my taste, it was still eye-opening to see how data keeps huge companies running.
+            At Intellus, we got a peek into what it’s like to work as a consultant in the data world. The SAP architecture session stood out, complex systems, data pipelines, and business-critical infrastructure. While I found SAP a bit too technical for my taste, it was still eye-opening to see how data keeps huge companies running.
           </p>
           <p>
             What stuck with me more than the tech was the way they described the job. They don’t expect you to be an expert on day one. You learn on the job, and they guide you. As someone who finds the post-graduation world of data pretty daunting, this made me feel more at ease.
@@ -502,7 +495,7 @@
       <div class="body">
         <!-- LEFT: Two images -->
         <div class="left-col">
-          <h3>March 21 – Sentigrate</h3>
+          <h3>March 21: Sentigrate</h3>
           <div class="image-grid">
             <img src="images/sentigrate.JPG" alt="Sentigrate platform demo" />
             <img src="images/sentigrate2.jpeg" alt="Team at Sentigrate" />
@@ -512,7 +505,7 @@
         <!-- RIGHT: Text -->
         <div class="right-col">
           <p>
-            At Sentigrate, I got to try out IntelliProve firsthand. The idea that a smartphone camera can scan your face and return health markers in seconds is kind of mind-blowing. Sentigrate builds the platforms behind this kind of medtech—connecting real-world sensors to scalable cloud architectures.
+            At Sentigrate, I got to try out IntelliProve firsthand. The idea that a smartphone camera can scan your face and return health markers in seconds is kind of mind-blowing. Sentigrate builds the platforms behind this kind of medtech, connecting real-world sensors to scalable cloud architectures.
           </p>
           <p>
             The team was young, ambitious, and clearly passionate about using data to improve lives. From bionic feet to stress sensors, they showed how raw data can be turned into meaningful health insights. It was inspiring to see how data science becomes something tangible, even personal.
@@ -540,7 +533,7 @@
       <div class="body">
         <!-- LEFT: Four images -->
         <div class="left-col">
-          <h3>March 28 – VRT</h3>
+          <h3>March 28: VRT</h3>
           <div class="image-grid">
             <img src="images/vrt.JPG" alt="VRT A/B testing demo" />
             <img src="images/vrt2.JPG" alt="VRT production workflow" />
@@ -555,7 +548,7 @@
             This visit felt surprisingly familiar. I was especially intrigued by how they use AI to test banners, headers, and layouts. Coming from a design background, I loved the idea of A/B testing creative elements using real-time feedback. It’s where data, design, and psychology meet.
           </p>
           <p>
-            It was also cool to see how deeply data runs through their workflow—from content planning to metadata for archive footage. VRT is clearly aiming for a future where every part of production is smart and adaptive.
+            It was also cool to see how deeply data runs through their workflow, from content planning to metadata for archive footage. VRT is clearly aiming for a future where every part of production is smart and adaptive.
           </p>
           <p>
             At one point, they mentioned that working there can feel chaotic, and honestly, that stuck with me. I’ve had work experiences like that before and didn’t love it. Still, I left feeling inspired by how creativity and data can support each other.
@@ -567,7 +560,7 @@
     </div>
 
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #6: Colruyt (already populated)
+         ITEM #6: Colruyt 
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -582,7 +575,7 @@
       <div class="body">
         <!-- LEFT: Three‐image grid for Colruyt -->
         <div class="left-col">
-          <h3>April 4 – Colruyt Hackathon</h3>
+          <h3>April 4: Colruyt Hackathon</h3>
           <div class="image-grid">
             <img src="images/colruyt1.jpeg" alt="Colruyt Group exterior with students" />
             <img src="images/colruyt2.jpeg" alt="Colruyt Hackathon presentation" />
@@ -593,7 +586,7 @@
         <!-- RIGHT: Text -->
         <div class="right-col">
           <p>
-            This was one of the most intense visits. The hackathon was fast-paced and packed with info. I appreciated the “blind date”–style rotations—it was interesting to see how many different roles exist in the data world. But it was also a bit too much at times. The sheer number of job types made it hard to get a clear picture.
+            This was one of the most intense visits. The hackathon was fast-paced and packed with info. I appreciated the “blind date”-style rotations, it was interesting to see how many different roles exist in the data world. But it was also a bit too much at times. The sheer number of job types made it hard to get a clear picture.
           </p>
           <p>
             What felt more familiar was the hackathon itself. A lot of the challenge leaned into marketing and business logic, so I was able to use my previous experience there. It was a reminder that my creative background is still very relevant in data-driven spaces.
@@ -605,7 +598,7 @@
     </div>
 
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #7: Labo Geel (NEW: four‐image grid)
+         ITEM #7: Labo Geel 
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -620,7 +613,7 @@
       <div class="body">
         <!-- LEFT: Four images for Labo Geel -->
         <div class="left-col">
-          <h3>May 9 – Geel (Lifesnaps Project)</h3>
+          <h3>May 9: Geel (Lifesnaps Project)</h3>
           <div class="image-grid">
             <img src="images/labogeel1.jpeg" alt="Presentation on wearables for stress monitoring" />
             <img src="images/labogeel2.jpeg" alt="Live demo: Emfit QS dashboard" />
@@ -633,7 +626,7 @@
         <!-- RIGHT: Text (unchanged, except image references removed) -->
         <div class="right-col">
           <p>
-            In Geel, we started working with the Lifesnaps dataset—over 71 million rows of Fitbit data tied to mood tracking. At first, it was overwhelming. But slowly, as we cleaned the data, explored it, and started building basic models, it became one of the most rewarding projects of the year.
+            In Geel, we started working with the Lifesnaps dataset, over 71 million rows of Fitbit data tied to mood tracking. At first, it was overwhelming. But slowly, as we cleaned the data, explored it, and started building basic models, it became one of the most rewarding projects of the year.
           </p>
           <p>
             This was the first time I saw up close how data could genuinely help people. Connecting biometric signals to mental health trends was powerful. It showed me how data science can be deeply human.
@@ -645,7 +638,7 @@
     </div>
 
     <!-- ────────────────────────────────────────────────────────────────────────
-         ITEM #8: Copenhagen (slight tweak: ensure images don’t run off)
+         ITEM #8: Copenhagen 
          ──────────────────────────────────────────────────────────────────────── -->
     <div class="item">
       <div class="gradient-wrap">
@@ -662,7 +655,7 @@
       <div class="body">
         <!-- LEFT: Five images for Copenhagen (wraps onto two columns responsively) -->
         <div class="left-col">
-          <h3>April 23–24 – Copenhagen Hackathon</h3>
+          <h3>April 23-24: Copenhagen Hackathon</h3>
           <div class="image-grid">
             <img src="images/cph5.jpeg" alt="Copenhagen hackathon brainstorming" />
             <img src="images/cph6.jpeg" alt="Copenhagen hackathon team photo" />
@@ -675,13 +668,13 @@
         <!-- RIGHT: Text -->
         <div class="right-col">
           <p>
-            This trip meant a lot to me. I joined partly to push myself out of my comfort zone, to meet people, and to feel more connected—and that happened. I bonded with classmates, laughed a lot, had real talks, and even saw my teachers more as people. When it was over, I genuinely felt sad. I even said so in the group chat, and the kind replies made it even better.
+            This trip meant a lot to me. I joined partly to push myself out of my comfort zone, to meet people, and to feel more connected, and that happened. I bonded with classmates, laughed a lot, had real talks, and even saw my teachers more as people. When it was over, I genuinely felt sad. I even said so in the group chat, and the kind replies made it even better.
           </p>
           <p>
             The hackathon itself had ups and downs. At first, I felt super insecure and underqualified. But I quickly saw that most others weren’t seasoned data experts either. The project, focused on Politiken’s subscriber growth, felt more like a branding brief than a true data challenge. We were missing key information and didn’t get to interact much with the KEA students, which felt like a missed opportunity.
           </p>
           <p>
-            Even so, I leaned into what I knew—branding, communication, storytelling—and still found value in the process. But honestly, the biggest takeaway wasn’t the hackathon. It was the people, the shared experience, and the feeling of belonging.
+            Even so, I leaned into what I knew, branding, communication, storytelling, and still found value in the process. But honestly, the biggest takeaway wasn’t the hackathon. It was the people, the shared experience, and the feeling of belonging.
           </p>
         </div>
       </div>
@@ -700,20 +693,21 @@
           <div class="color c4"></div>
         </div>
       </div>
-
       <div class="title">The Beacon</div>
 
       <div class="body">
-        <!-- LEFT: (no images provided for The Beacon) -->
         <div class="left-col">
-          <h3>February 19 – The Beacon (Antwerp)</h3>
+          <h3>February 19: The Beacon (Antwerp)</h3>
+          <div class="image-grid">
+            <img src="images/beacon1.jpg" alt="Beacon: Crowd of students" />
+            <img src="images/beacon2.jpg" alt="Beacon: Speaker on stage" />
+            <img src="images/beacon3.jpg" alt="Beacon: Building exterior" />
+          </div>
+        </div>
+        <div class="right-col">
           <p>
-            The Beacon was all about smart logistics and the future of port operations. We got to see how data is slowly becoming the backbone of international shipping. Companies like Dashdoc and Dockflow are creating systems to cut down wasted time, reduce costs, and streamline transport flows. Even fruit containers are now monitored in real-time for temperature changes.
-          </p>
-          <p>
-            What stood out most wasn’t just the tech—it was the scale of change. Antwerp’s port isn’t just modernizing; it’s transforming into a living data system. From AI-driven routing to drone inspections, we’re watching the old logistics world evolve into something more intelligent, more responsive, and more connected.
-          </p>
-          <p>
+            The Beacon was all about smart logistics and the future of port operations. We got to see how data is slowly becoming the backbone of international shipping. Companies like Dashdoc and Dockflow are creating systems to cut down wasted time, reduce costs, and streamline transport flows. Even fruit containers are now monitored in real time for temperature changes.<br><br>
+            What stood out most wasn’t just the tech, it was the scale of change. Antwerp’s port isn’t just modernizing; it’s transforming into a living data system. From AI‐driven routing to drone inspections, we’re watching the old logistics world evolve into something more intelligent, more responsive, and more connected.<br><br>
             Even though this visit didn’t grip me personally as much as some others, it gave me a clear picture of how digital infrastructure is reshaping one of Belgium’s biggest industries.
           </p>
         </div>
