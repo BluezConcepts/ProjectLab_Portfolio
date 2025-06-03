@@ -344,84 +344,90 @@
        - Force expanded .body into column
     ────────────────────────────────────────────────────────────────────────── */
       @media (max-width: 768px) {
-  /* ───────────────────────────────────────────────────────────────────────
-     1) STACK ALL TILES VERTICALLY (single‐column grid) but KEEP A 6px GAP
-     ─────────────────────────────────────────────────────────────────────── */
-  .grid {
-    display: grid;
-    width: 100vw;
-    height: auto;                      /* Let grid grow; user can scroll */
-    grid-template-columns: 1fr;         /* Single column */
-    grid-template-rows: repeat(9, 200px); /* Each tile 200px tall (adjust if needed) */
-    gap: 6px;                           /* Preserve the 6px gap between tiles */
-  }
+    /* ───────────────────────────────────────────────────────────────────────
+      1) STACK ALL TILES VERTICALLY (single‐column grid) but KEEP A 6px GAP
+      ─────────────────────────────────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      width: 100vw;
+      height: auto;                      /* Let grid grow; user can scroll */
+      grid-template-columns: 1fr;         /* Single column */
+      grid-template-rows: repeat(9, 200px); /* Each tile 200px tall (adjust if needed) */
+      gap: 6px;                           /* Preserve the 6px gap between tiles */
+    }
 
-  /* ───────────────────────────────────────────────────────────────────────
-     2) DISABLE HOVER‐RESIZE (reset all grid‐variables)
-     ─────────────────────────────────────────────────────────────────────── */
-  :root {
-    --c1: 1fr;
-    --c2: 1fr;
-    --c3: 1fr;
-    --r1: 1fr;
-    --r2: 1fr;
-    --r3: 1fr;
-  }
+    /* ───────────────────────────────────────────────────────────────────────
+      2) DISABLE HOVER‐RESIZE (reset all grid‐variables)
+      ─────────────────────────────────────────────────────────────────────── */
+    :root {
+      --c1: 1fr;
+      --c2: 1fr;
+      --c3: 1fr;
+      --r1: 1fr;
+      --r2: 1fr;
+      --r3: 1fr;
+    }
 
-  /* ───────────────────────────────────────────────────────────────────────
-     3) ENSURE EACH .item FILLS ITS ROW HEIGHT
-     ─────────────────────────────────────────────────────────────────────── */
-  .item {
-    height: 100%;
-  }
+    /* ───────────────────────────────────────────────────────────────────────
+      3) ENSURE EACH .item FILLS ITS ROW HEIGHT
+      ─────────────────────────────────────────────────────────────────────── */
+    .item {
+      height: 100%;
+    }
 
-  /* ───────────────────────────────────────────────────────────────────────
-     4) ADJUST TITLE SIZING ON MOBILE
-     ─────────────────────────────────────────────────────────────────────── */
-  .title {
-    font-size: calc(4vw * var(--f)); /* Slightly larger on narrow screens */
-  }
-  .item.expanded .title {
-    font-size: 5vw;
-  }
+    /* ───────────────────────────────────────────────────────────────────────
+      4) ADJUST TITLE SIZING ON MOBILE
+      ─────────────────────────────────────────────────────────────────────── */
+    .title {
+      font-size: calc(4vw * var(--f)); /* Slightly larger on narrow screens */
+    }
+    .item.expanded .title {
+      font-size: 5vw;
+    }
 
-  /* ───────────────────────────────────────────────────────────────────────
-     5) FORCE THE BODY SECTION INTO A VERTICAL LAYOUT & REMOVE CLIPPING
-     ─────────────────────────────────────────────────────────────────────── */
-  .item.expanded .body {
-    flex-direction: column;    /* Stack left‐col + right‐col vertically */
-    max-height: none;          /* Allow the content to grow without clipping */
-    padding-bottom: 2rem;      /* A bit of breathing room at the bottom */
-  }
-  .item.expanded .body .left-col,
-  .item.expanded .body .right-col {
-    width: 100%;               /* Each column becomes full-width */
-  }
+    /* ───────────────────────────────────────────────────────────────────────
+      5) FORCE THE BODY SECTION INTO A VERTICAL LAYOUT & REMOVE CLIPPING
+      ─────────────────────────────────────────────────────────────────────── */
+    .item.expanded .body {
+      flex-direction: column;    /* Stack left‐col + right‐col vertically */
+      max-height: none;          /* Allow the content to grow without clipping */
+      padding-bottom: 2rem;      /* A bit of breathing room at the bottom */
+    }
+    .item.expanded .body .left-col,
+    .item.expanded .body .right-col {
+      width: 100%;               /* Each column becomes full-width */
+    }
+    /* ───────────────────────────────────────────────────────────────────────
+      A) Make “grid” tile titles bigger on mobile
+      ─────────────────────────────────────────────────────────────────────── */
+    .item .title {
+      /* e.g. 6vw ensures the text scales with screen width */
+      font-size: 6vw !important;
+    }
 
-  /* ───────────────────────────────────────────────────────────────────────
-     6) OVERRIDE THE ORIGINAL 100vh SO EXPANDED TILES CAN SCROLL
-     ─────────────────────────────────────────────────────────────────────── */
-  .item.expanded {
-    /* In your original CSS this was "height: 100vh !important;". We override it here: */
-    height: auto !important;        /* Let it grow taller than one screen if necessary */
-    min-height: 100vh !important;   /* But keep at least one full screen tall */
-    overflow-y: auto !important;    /* Enable vertical scrolling inside the expanded tile */
-  }
+    /* If you want a slightly smaller size once a tile is expanded, you can override it: */
+    .item.expanded .title {
+      font-size: 5vw !important;
+    }
+    /* ───────────────────────────────────────────────────────────────────────
+      6) OVERRIDE THE ORIGINAL 100vh SO EXPANDED TILES CAN SCROLL
+      ─────────────────────────────────────────────────────────────────────── */
+    .item.expanded {
+      /* In your original CSS this was "height: 100vh !important;". We override it here: */
+      height: auto !important;        /* Let it grow taller than one screen if necessary */
+      min-height: 100vh !important;   /* But keep at least one full screen tall */
+      overflow-y: auto !important;    /* Enable vertical scrolling inside the expanded tile */
+    }
 
-  /* ───────────────────────────────────────────────────────────────────────
-     7) ONLY SCALE DOWN THE MESH‐GRADIENT WHEN THE TILE IS EXPANDED
-        (so that the un-clicked grid retains its “normal” gradient look)
-     ─────────────────────────────────────────────────────────────────────── */
-  .item.expanded .meshgradient > .color {
-    /* Original desktop code had transform: scale(3) rotate(...) etc.
-       Here we simply halve that scale so the gradient still fits in an expanded view. */
-    transform: scale(1.5) rotate(0deg) !important;
-  }
-
-  /* If you’d rather not touch the gradient at all, you can comment out or remove
-     the entire rule above. Then the meshgradient will look exactly like your
-     desktop version even in an expanded tile. */
-}
+    /* ───────────────────────────────────────────────────────────────────────
+      7) ONLY SCALE DOWN THE MESH‐GRADIENT WHEN THE TILE IS EXPANDED
+          (so that the un-clicked grid retains its “normal” gradient look)
+      ─────────────────────────────────────────────────────────────────────── */
+    .item.expanded .meshgradient > .color {
+      /* Original desktop code had transform: scale(3) rotate(...) etc.
+        Here we simply halve that scale so the gradient still fits in an expanded view. */
+      transform: scale(1.5) rotate(0deg) !important;
+    }
 
 
 
